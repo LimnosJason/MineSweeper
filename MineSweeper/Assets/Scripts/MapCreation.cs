@@ -22,7 +22,7 @@ public class MapCreation : MonoBehaviour
     }
 
     void PlaceRoomsMethod(){
-        int i,j,row=50,col=50;
+        int i,j,row=5,col=5;
         savedPosition=mapGameObject.transform.position;
         //Place rooms
         for(i=0;i<row;i++){
