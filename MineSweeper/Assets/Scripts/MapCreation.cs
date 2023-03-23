@@ -9,20 +9,31 @@ public class MapCreation : MonoBehaviour
     [SerializeField] GameObject mapGameObject;
 
     private Vector3 savedPosition;
-    // Start is called before the first frame update
+
+    PlaceItems placeItems;
+    [SerializeField] GameObject placeItemsObject;
+
+    private int row,col;
+
+    void Awake(){
+        placeItems = placeItemsObject.GetComponent<PlaceItems>();
+    }
+
     void Start()
     {
         PlaceRoomsMethod();
+        placeItems.SpawnPlayerRandomlySplit(row, col);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
     }
 
     void PlaceRoomsMethod(){
-        int i,j,row=5,col=5;
+        int i,j;
+        row=5;col=5;
         savedPosition=mapGameObject.transform.position;
         //Place rooms
         for(i=0;i<row;i++){
@@ -37,7 +48,7 @@ public class MapCreation : MonoBehaviour
                 }
                 else if(j==col-1){
                     GameObject instantiatedObject=Instantiate(parallelRoomPrefab);
-                    instantiatedObject.name = "Border Room " + (i+1).ToString() + " " + (j+1).ToString();
+                    instantiatedObject.name = "Paraller Room " + (i+1).ToString() + " " + (j+1).ToString();
                     instantiatedObject.transform.SetParent(mapGameObject.transform);
                     instantiatedObject.transform.position = savedPosition;
                 }
