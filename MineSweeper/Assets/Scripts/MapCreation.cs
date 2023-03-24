@@ -26,7 +26,6 @@ public class MapCreation : MonoBehaviour
         placeItems.StartSpawningItems(mapRow, mapCol);
     }
 
-
     void Update()
     {
         
@@ -34,6 +33,7 @@ public class MapCreation : MonoBehaviour
 
     void PlaceRoomsMethod(){
         int i,j;
+        GameObject instantiatedObject;
         mapRow=5;mapCol=5;
         savedPosition=mapGameObject.transform.position;
         //Place rooms
@@ -42,26 +42,26 @@ public class MapCreation : MonoBehaviour
             for(j=0;j<mapCol;j++){
                 savedPosition= savedPosition + new Vector3(0.0f, 0.0f, -10.0f);
                 if(i==0&&j==0){
-                    GameObject instantiatedObject=Instantiate(cornerRoomPrefab);
+                    instantiatedObject=Instantiate(cornerRoomPrefab);
                     instantiatedObject.name = "Corner Room " + (i+1).ToString() + " " + (j+1).ToString();
                     instantiatedObject.transform.SetParent(mapGameObject.transform);
                     instantiatedObject.transform.position = savedPosition;
                 }
                 else if(i==mapRow-1){
                     if(j==0){
-                        GameObject instantiatedObject=Instantiate(cubeRoomPrefab);
+                        instantiatedObject=Instantiate(cubeRoomPrefab);
                         instantiatedObject.name = "Cube Room " + (i+1).ToString() + " " + (j+1).ToString();
                         instantiatedObject.transform.SetParent(mapGameObject.transform);
                         instantiatedObject.transform.position = savedPosition;
                     }
                     else if(j==mapCol-1){
-                        GameObject instantiatedObject=Instantiate(cubeRoomPrefab);
+                        instantiatedObject=Instantiate(cubeRoomPrefab);
                         instantiatedObject.name = "Cube Room " + (i+1).ToString() + " " + (j+1).ToString();
                         instantiatedObject.transform.SetParent(mapGameObject.transform);
                         instantiatedObject.transform.position = savedPosition;
                     }
                     else{
-                        GameObject instantiatedObject=Instantiate(parallelRoomPrefab);
+                        instantiatedObject=Instantiate(parallelRoomPrefab);
                         instantiatedObject.name = "Paraller Room " + (i+1).ToString() + " " + (j+1).ToString();
                         instantiatedObject.transform.SetParent(mapGameObject.transform);
                         instantiatedObject.transform.position = savedPosition;
@@ -69,18 +69,38 @@ public class MapCreation : MonoBehaviour
                     }
                 }
                 else if(j==mapCol-1){
-                    GameObject instantiatedObject=Instantiate(parallelRoomPrefab);
+                    instantiatedObject=Instantiate(parallelRoomPrefab);
                     instantiatedObject.name = "Paraller Room " + (i+1).ToString() + " " + (j+1).ToString();
                     instantiatedObject.transform.SetParent(mapGameObject.transform);
                     instantiatedObject.transform.position = savedPosition;
                 }
                 else{
-                    GameObject instantiatedObject=Instantiate(cornerRoomPrefab);
+                    instantiatedObject=Instantiate(cornerRoomPrefab);
                     instantiatedObject.name = "Corner Room " + (i+1).ToString() + " " + (j+1).ToString();
                     instantiatedObject.transform.SetParent(mapGameObject.transform);
                     instantiatedObject.transform.position = savedPosition;
                 }
+                Debug.Log(instantiatedObject);
+                SetBorders(i,j,instantiatedObject);
             }
+        }
+    }
+
+    void SetBorders(int row,int col,GameObject selectedRoom){
+        if(row==0){
+            selectedRoom.transform.Find("Walls").transform.Find("Wall 1").name="Border";
+        }
+        else if(row==mapRow-1){
+            if(selectedRoom.transform.name.Contains("Cube"))
+                selectedRoom.transform.Find("Walls").transform.Find("Wall 4").name="Border";
+            else
+                selectedRoom.transform.Find("Walls").transform.Find("Wall 3").name="Border";
+        }
+        if(col==0){
+            selectedRoom.transform.Find("Walls").transform.Find("Wall 2").name="Border";
+        }
+        else if(col==mapCol-1){
+            selectedRoom.transform.Find("Walls").transform.Find("Wall 3").name="Border";
         }
     }
 }
