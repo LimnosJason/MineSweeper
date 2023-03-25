@@ -280,3 +280,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10, type: 3}
+  mineCounterPrefab: {fileID: 6003260681263570288, guid: da7cd126e1d6159498ce03a1cc0beb2a, type: 3}
+  changeTextScriptObject: {fileID: 0}
