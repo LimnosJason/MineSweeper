@@ -13,7 +13,7 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] GameObject changeTextScriptObject;
 
     private Vector3 savedPosition;
-    private int mineNumber=5;
+    private int mineNumber=75;
     private int mapRow,mapCol;
     private int[,] mapArray;
     // Start is called before the first frame update
@@ -40,8 +40,8 @@ public class PlaceItems : MonoBehaviour
     void SpawnPlayerRandomly(){ 
         int randomCol,randomRow;   
 
-        randomRow = Random.Range(1, mapRow);
-        randomCol = Random.Range(1, mapCol);
+        randomRow = Random.Range(1, mapRow+1);
+        randomCol = Random.Range(1, mapCol+1);
         
         FindSelectedRoom(randomRow,randomCol);
 
@@ -56,10 +56,12 @@ public class PlaceItems : MonoBehaviour
 
     void SpawnMineRandomly(){
         int i,randomCol,randomRow;   
+        print("MAP ROW"+mapRow);
         for(i=0;i<mineNumber;i++){
             
-            randomRow = Random.Range(1, mapRow);
-            randomCol = Random.Range(1, mapCol);
+            randomRow = Random.Range(1, mapRow+1);
+            randomCol = Random.Range(1, mapCol+1);
+            print("RANDOM ROW"+randomRow);
             if(mapArray[randomRow-1,randomCol-1]==0){
                 FindSelectedRoom(randomRow,randomCol);
                 
@@ -84,9 +86,6 @@ public class PlaceItems : MonoBehaviour
         if(!selectedRoom){
             selectedRoom=GameObject.Find("Cube Room "+row+" "+col);
         }
-        Debug.Log(row);
-        Debug.Log(col);
-        Debug.Log(selectedRoom);
         return selectedRoom;
     }
 
@@ -124,10 +123,6 @@ public class PlaceItems : MonoBehaviour
 
     void ChangeMineCountText(int count,int row,int col){
         GameObject selectedRoom=FindSelectedRoom(row,col);
-
-        Debug.Log(row);
-        Debug.Log(col);
-        Debug.Log(selectedRoom);
 
         savedPosition = selectedRoom.transform.Find("Podium").position;
         savedPosition.y = 4f;

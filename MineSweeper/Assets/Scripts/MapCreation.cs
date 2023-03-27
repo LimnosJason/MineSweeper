@@ -22,6 +22,9 @@ public class MapCreation : MonoBehaviour
 
     void Start()
     {
+        mapRow=(int)PlayButtonScript.levelSize;
+        mapCol=(int)PlayButtonScript.levelSize;
+        Debug.Log(mapRow);
         PlaceRoomsMethod();
         placeItems.StartSpawningItems(mapRow, mapCol);
     }
@@ -34,7 +37,6 @@ public class MapCreation : MonoBehaviour
     void PlaceRoomsMethod(){
         int i,j;
         GameObject instantiatedObject;
-        mapRow=5;mapCol=5;
         savedPosition=mapGameObject.transform.position;
         //Place rooms
         for(i=0;i<mapRow;i++){
