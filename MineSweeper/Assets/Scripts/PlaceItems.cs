@@ -11,9 +11,10 @@ public class PlaceItems : MonoBehaviour
     
     ChangeTextScript changeTextScript;
     [SerializeField] GameObject changeTextScriptObject;
+    [SerializeField] GameObject minePrefab;
 
     private Vector3 savedPosition;
-    private int mineNumber=75;
+    private int mineNumber;
     private int mapRow,mapCol;
     private int[,] mapArray;
     // Start is called before the first frame update
@@ -32,6 +33,8 @@ public class PlaceItems : MonoBehaviour
         mapRow=row;
         mapCol=col;
         mapArray = new int[mapRow,mapCol];
+        mineNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
+        print(mineNumber);
         SpawnPlayerRandomly();
         SpawnMineRandomly();
         CountMines();
@@ -56,16 +59,21 @@ public class PlaceItems : MonoBehaviour
 
     void SpawnMineRandomly(){
         int i,randomCol,randomRow;   
-        print("MAP ROW"+mapRow);
+        // print("MAP ROW"+mapRow);
         for(i=0;i<mineNumber;i++){
             
             randomRow = Random.Range(1, mapRow+1);
             randomCol = Random.Range(1, mapCol+1);
-            print("RANDOM ROW"+randomRow);
+            // print("RANDOM ROW"+randomRow);
             if(mapArray[randomRow-1,randomCol-1]==0){
                 FindSelectedRoom(randomRow,randomCol);
                 
                 savedPosition = selectedRoom.transform.Find("Podium").position;
+
+                GameObject instantiatedObject=Instantiate(minePrefab);
+                instantiatedObject.name = "Mine " + (i+1).ToString();
+                instantiatedObject.transform.SetParent(selectedRoom.transform);
+                instantiatedObject.transform.position = savedPosition;
 
                 mapArray[randomRow-1,randomCol-1]=1;
             }
@@ -115,7 +123,6 @@ public class PlaceItems : MonoBehaviour
                         }
                     }
                 }
-                // Debug.Log(count);
                 ChangeMineCountText(count,i+1,j+1);
             }
         }

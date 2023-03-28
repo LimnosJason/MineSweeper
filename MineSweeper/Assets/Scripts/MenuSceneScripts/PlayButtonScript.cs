@@ -15,7 +15,7 @@ public class PlayButtonScript : MonoBehaviour
 
     public void StartGameMethod(){
         levelSize=levelSizeSlider.value;
-        levelDifficulty=levelDifficultySlider.value;
+        levelDifficulty=DifficultySliderScript.difficultyPercentage;
 
           SceneManager.LoadScene("GameScene");
     }

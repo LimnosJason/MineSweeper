@@ -282,3 +282,4 @@ MonoBehaviour:
   playerPrefab: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10, type: 3}
   mineCounterPrefab: {fileID: 6003260681263570288, guid: da7cd126e1d6159498ce03a1cc0beb2a, type: 3}
   changeTextScriptObject: {fileID: 0}
+  minePrefab: {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}

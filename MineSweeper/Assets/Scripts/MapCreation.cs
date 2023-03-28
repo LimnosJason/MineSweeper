@@ -24,7 +24,6 @@ public class MapCreation : MonoBehaviour
     {
         mapRow=(int)PlayButtonScript.levelSize;
         mapCol=(int)PlayButtonScript.levelSize;
-        Debug.Log(mapRow);
         PlaceRoomsMethod();
         placeItems.StartSpawningItems(mapRow, mapCol);
     }
@@ -82,7 +81,6 @@ public class MapCreation : MonoBehaviour
                     instantiatedObject.transform.SetParent(mapGameObject.transform);
                     instantiatedObject.transform.position = savedPosition;
                 }
-                Debug.Log(instantiatedObject);
                 SetBorders(i,j,instantiatedObject);
             }
         }

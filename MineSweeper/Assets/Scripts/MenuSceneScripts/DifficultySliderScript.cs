@@ -7,6 +7,8 @@ public class DifficultySliderScript : MonoBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI optionText;
+
+    public static float difficultyPercentage=10;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,25 +18,26 @@ public class DifficultySliderScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float value = slider.value;
-        float interval = 0.25f; //any interval you want to round to
-        value = Mathf.Round(value / interval) * interval;
-        slider.value = value;
-        switch(value){
-            case 0.0f:
+        switch(slider.value){
+            case 0f:
                 optionText.text="Very Easy";
+                difficultyPercentage=10f;
                 break;
-            case 0.25f:
+            case 1f:
                 optionText.text="Easy";
+                difficultyPercentage=13.75f;
                 break;
-            case 0.5f:
+            case 2f:
                 optionText.text="Medium";
+                difficultyPercentage=17.5f;
                 break;
-            case 0.75f:
+            case 3f:
                 optionText.text="Hard";
+                difficultyPercentage=21.25f;
                 break;  
-            case 1.0f:
+            case 4f:
                 optionText.text="Impossible";
+                difficultyPercentage=25f;
                 break;      
         }   
     }
