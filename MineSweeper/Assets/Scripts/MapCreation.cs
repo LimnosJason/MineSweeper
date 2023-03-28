@@ -66,7 +66,7 @@ public class MapCreation : MonoBehaviour
                         instantiatedObject.name = "Parallel Room " + (i+1).ToString() + " " + (j+1).ToString();
                         instantiatedObject.transform.SetParent(mapGameObject.transform);
                         instantiatedObject.transform.position = savedPosition;
-                        instantiatedObject.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+                        instantiatedObject.transform.Rotate(0.0f, 270.0f, 0.0f, Space.World);
                     }
                 }
                 else if(j==mapCol-1){
