@@ -99,10 +99,13 @@ public class PlaceItems : MonoBehaviour
 
     void PrintArray(){
         int i,j;
+        string str;
         for(i=0;i<mapRow;i++){
+            str = "";
             for(j=0;j<mapCol;j++){
-                Debug.Log(mapArray[i,j]);
+                str+=mapArray[i,j]+" ";
             }
+            Debug.Log(str);
         }
     }
 
@@ -116,7 +119,7 @@ public class PlaceItems : MonoBehaviour
                 count=0;
                 for(k=-1;k<=1;k++){
                     for(l=-1;l<=1;l++){
-                        if(i+k<5 && i+k>=0 && j+l<5 && j+l>=0 && (k!=0 || l!=0)){
+                        if(i+k<mapRow && i+k>=0 && j+l<mapCol && j+l>=0 && (k!=0 || l!=0)){
                             if(mapArray[i+k,j+l]==1){
                                 count++;
                             }
@@ -133,13 +136,14 @@ public class PlaceItems : MonoBehaviour
 
         savedPosition = selectedRoom.transform.Find("Podium").position;
         savedPosition.y = 4f;
+        if(count>0){
+            GameObject mineCounterText=Instantiate(mineCounterPrefab);
+            mineCounterText.transform.SetParent(selectedRoom.transform);
+            mineCounterText.transform.position = savedPosition;
 
-        GameObject mineCounterText=Instantiate(mineCounterPrefab);
-        mineCounterText.transform.SetParent(selectedRoom.transform);
-        mineCounterText.transform.position = savedPosition;
-
-        changeTextScriptObject=mineCounterText;
-        changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
-        changeTextScript.ChangeMineCounterText(count);
+            changeTextScriptObject=mineCounterText;
+            changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
+            changeTextScript.ChangeMineCounterText(count);
+        }
     }
 }
