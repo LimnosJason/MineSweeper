@@ -19,7 +19,7 @@ public class MineHitBox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        if(other.name.Contains("Cube"))
+        if(other.name.Contains("Wall"))
             Destroy(other.gameObject);
         else if(other.name.Contains("Body")) {
             mineScript.Explode(other);

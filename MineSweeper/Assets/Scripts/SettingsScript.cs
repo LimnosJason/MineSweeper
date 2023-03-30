@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingsScript : MonoBehaviour
 {
@@ -30,26 +31,24 @@ public class SettingsScript : MonoBehaviour
     
     public void SetAllActive(){
         settingsCanvas.SetActive(true);
-        // resumeButton.SetActive(true);
-        // restartButton.SetActive(true);
-        // mainMenuButton.SetActive(true);
-        // settingsButton.SetActive(true);
-        // helpButton.SetActive(true);
-
         aimImage.SetActive(false);
     }
     public void SetAllInactive(){
         settingsCanvas.SetActive(false);
-        // resumeButton.SetActive(false);
-        // restartButton.SetActive(false);
-        // mainMenuButton.SetActive(false);
-        // settingsButton.SetActive(false);
-        // helpButton.SetActive(false);
-
          aimImage.SetActive(true);
     }
 
     public void ResumeButton(){
         playerCamera.ResumeMethod();
+    }
+
+    public void RestartButton(){
+        Time.timeScale = 1;
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void MainMenuButton(){
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MenuScene");
     }
 }
