@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
     public Camera mainCamera ;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,4 +24,5 @@ public class PlayerActions : MonoBehaviour
             }
         }
     }
+
 }
