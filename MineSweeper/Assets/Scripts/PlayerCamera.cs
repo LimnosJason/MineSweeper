@@ -9,6 +9,14 @@ public class PlayerCamera:MonoBehaviour {
     private bool escapeFlag=false;
     public Transform playerBody;
     float xRotation = 0f;
+
+    SettingsScript settingsScript;
+    [SerializeField] GameObject settingsScriptObject;
+
+    void Start(){
+        settingsScript = settingsScriptObject.GetComponent<SettingsScript>();
+    }
+
     void Update() {
         if(!escapeFlag){
             Cursor.lockState=CursorLockMode.Locked;
@@ -24,10 +32,12 @@ public class PlayerCamera:MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)){
             if(!escapeFlag){
                 Cursor.lockState=CursorLockMode.None;
+                settingsScript.SetAllActive();
+                Time.timeScale = 0;
                 escapeFlag=true;
             }
             else{
-                escapeFlag=false;
+                ResumeMethod();
             }
         }
         // }
@@ -35,5 +45,12 @@ public class PlayerCamera:MonoBehaviour {
         //     Cursor.lockState=CursorLockMode.None;
         // }
         
+    }
+
+    public void ResumeMethod(){
+        settingsScript.SetAllInactive();
+        Time.timeScale = 1;
+        escapeFlag=false;
+        Cursor.lockState=CursorLockMode.Locked;
     }
 }

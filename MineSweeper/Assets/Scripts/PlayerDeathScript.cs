@@ -17,14 +17,16 @@ public class PlayerDeathScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
     
     public void PlayerDeath(){
-        if((int)Time.timeScale==1){
-            Debug.Log("w");
-            playerBody.transform.Rotate(-90,0,0);
-            Time.timeScale = 0;
-        }
+        // if((int)Time.timeScale==1){
+        //     playerBody.transform.Rotate(-90,0,0);
+        //     Debug.Log(playerBody.transform.localRotation.eulerAngles.x);
+        //     if(playerBody.transform.localRotation.eulerAngles.x==270){
+        //         Time.timeScale = 0;
+        //     }
+        // }
     }
 }
