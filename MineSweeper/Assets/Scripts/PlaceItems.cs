@@ -6,6 +6,7 @@ public class PlaceItems : MonoBehaviour
 {
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject mineCounterPrefab;
+    [SerializeField] GameObject skyMineCounterPrefab;
 
     GameObject selectedRoom=null;
     
@@ -142,6 +143,14 @@ public class PlaceItems : MonoBehaviour
             mineCounterText.transform.position = savedPosition;
 
             changeTextScriptObject=mineCounterText;
+            changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
+            changeTextScript.ChangeMineCounterText(count);
+
+            GameObject skyMineCounterText=Instantiate(skyMineCounterPrefab);
+            skyMineCounterText.transform.SetParent(selectedRoom.transform);
+            skyMineCounterText.transform.position = savedPosition;
+
+            changeTextScriptObject=skyMineCounterText;
             changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
             changeTextScript.ChangeMineCounterText(count);
         }
