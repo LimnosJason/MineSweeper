@@ -420,6 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 805897480955477819}
   - component: {fileID: 2575282825933142277}
+  - component: {fileID: 716380429538597968}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -458,6 +459,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 805897481431236258}
   fallSpeed: 100
+--- !u!114 &716380429538597968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805897480955477816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313eee592c5729e4e96f7a76e40b34b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 6728838904585353703}
+  healthBarText: {fileID: 6198086989270435383}
 --- !u!1 &805897481300501396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +1976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100.00001, y: -25}
+  m_AnchoredPosition: {x: 100.00001, y: -27.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1979609518787943544
@@ -2902,7 +2917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -267, y: 144.30946}
+  m_AnchoredPosition: {x: -267, y: 137.30946}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6786467167453489940
@@ -3231,7 +3246,7 @@ RectTransform:
   m_GameObject: {fileID: 7659413888979769212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6228783098792486092}
@@ -3270,7 +3285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e59a11e48a51ec940a09308fadfaf0df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6abfcb6c64ea85a4a9f1275d2a530092, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3584,6 +3599,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -267, y: 112}
+  m_AnchoredPosition: {x: -267, y: 105}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}

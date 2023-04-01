@@ -13,9 +13,11 @@ public class PlaceItems : MonoBehaviour
     ChangeTextScript changeTextScript;
     [SerializeField] GameObject changeTextScriptObject;
     [SerializeField] GameObject minePrefab;
+    [SerializeField] GameObject coinPrefab;
 
     private Vector3 savedPosition;
     private int mineNumber;
+    private int coinNumber;
     private int mapRow,mapCol;
     private int[,] mapArray;
     // Start is called before the first frame update
@@ -35,9 +37,11 @@ public class PlaceItems : MonoBehaviour
         mapCol=col;
         mapArray = new int[mapRow,mapCol];
         mineNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
-        print(mineNumber);
+        coinNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
+
         SpawnPlayerRandomly();
         SpawnMineRandomly();
+        SpawnCoinRandomly();
         CountMines();
     }
 
@@ -77,6 +81,30 @@ public class PlaceItems : MonoBehaviour
                 instantiatedObject.transform.position = savedPosition;
 
                 mapArray[randomRow-1,randomCol-1]=1;
+            }
+            else{
+                i--;
+                continue;
+            }
+        }
+    }
+
+    void SpawnCoinRandomly(){
+        int i,randomCol,randomRow;   
+        for(i=0;i<coinNumber;i++){   
+            randomRow = Random.Range(1, mapRow+1);
+            randomCol = Random.Range(1, mapCol+1);
+            if(mapArray[randomRow-1,randomCol-1]==0){
+                FindSelectedRoom(randomRow,randomCol);
+                
+                savedPosition = selectedRoom.transform.Find("Podium").position;
+
+                GameObject instantiatedObject=Instantiate(coinPrefab);
+                instantiatedObject.name = "Coin";
+                instantiatedObject.transform.SetParent(selectedRoom.transform);
+                instantiatedObject.transform.position = savedPosition;
+
+                mapArray[randomRow-1,randomCol-1]=2;
             }
             else{
                 i--;
