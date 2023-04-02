@@ -9,7 +9,7 @@ public class PlayerStatisticsScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI healthBarText;
 
-    private int playerScore=0;
+    public static int playerScore=0;
     private int playerHealth=100;
 
     public int GetPlayerScore(){
@@ -19,10 +19,15 @@ public class PlayerStatisticsScript : MonoBehaviour
         return playerScore;
     }
 
+    public void Update(){
+        scoreText.text=GetPlayerScore().ToString();
+    }
+
     public void SetPlayerScore(int newScore){
         playerScore+=newScore;
-        scoreText.text=playerScore.ToString();
-        Debug.Log(scoreText.text);
+        Debug.Log("ssssssssssssss"+playerScore);
+        //scoreText.text=playerScore.ToString();
+        //Debug.Log(scoreText.text);
     }
     public void SetPlayerHealth(int newHealth){
         playerHealth+=newHealth;
