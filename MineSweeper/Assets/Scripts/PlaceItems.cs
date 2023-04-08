@@ -13,6 +13,7 @@ public class PlaceItems : MonoBehaviour
     ChangeTextScript changeTextScript;
     [SerializeField] GameObject changeTextScriptObject;
     [SerializeField] GameObject minePrefab;
+    [SerializeField] GameObject wallBreakDetectionPrefab;
     [SerializeField] GameObject coinPrefab;
 
     private Vector3 savedPosition;
@@ -42,6 +43,7 @@ public class PlaceItems : MonoBehaviour
         SpawnPlayerRandomly();
         SpawnMineRandomly();
         SpawnCoinRandomly();
+        PlaceWallBreakDetection();
         CountMines();
     }
 
@@ -104,7 +106,7 @@ public class PlaceItems : MonoBehaviour
                 instantiatedObject.transform.SetParent(selectedRoom.transform);
                 instantiatedObject.transform.position = savedPosition;
 
-                mapArray[randomRow-1,randomCol-1]=2;
+                mapArray[randomRow-1,randomCol-1]=3;
             }
             else{
                 i--;
@@ -165,6 +167,11 @@ public class PlaceItems : MonoBehaviour
 
         savedPosition = selectedRoom.transform.Find("Podium").position;
         savedPosition.y = 4f;
+
+        GameObject skyMineCounterText=Instantiate(skyMineCounterPrefab);
+        skyMineCounterText.transform.SetParent(selectedRoom.transform);
+        skyMineCounterText.transform.position = savedPosition;
+
         if(count>0){
             GameObject mineCounterText=Instantiate(mineCounterPrefab);
             mineCounterText.transform.SetParent(selectedRoom.transform);
@@ -174,13 +181,32 @@ public class PlaceItems : MonoBehaviour
             changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
             changeTextScript.ChangeMineCounterText(count);
 
-            GameObject skyMineCounterText=Instantiate(skyMineCounterPrefab);
-            skyMineCounterText.transform.SetParent(selectedRoom.transform);
-            skyMineCounterText.transform.position = savedPosition;
-
             changeTextScriptObject=skyMineCounterText;
             changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
             changeTextScript.ChangeMineCounterText(count);
         }
+
+        
+    }
+
+    void PlaceWallBreakDetection(){
+        int row,col;
+        GameObject selectedRoom;
+        GameObject instantiatedObject;
+        for(row=0;row<mapRow;row++){
+            for(col=0;col<mapCol;col++){
+                if(mapArray[row,col]!=2){
+                    selectedRoom = FindSelectedRoom(row+1,col+1);
+                    
+                    savedPosition = selectedRoom.transform.Find("Podium").position;
+                    savedPosition.y=3f;
+
+                    instantiatedObject = Instantiate(wallBreakDetectionPrefab);
+                    instantiatedObject.name = "WallBreakDetection";
+                    instantiatedObject.transform.SetParent(selectedRoom.transform);
+                    instantiatedObject.transform.position = savedPosition;
+                }
+            }
+        }    
     }
 }
