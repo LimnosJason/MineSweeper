@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallBreakDetectionScript : MonoBehaviour
 {
-    private bool flag=false;
+    private bool wallBreakFlag=false;
     void Update(){
         RaycastHit hit;
         
@@ -12,22 +12,26 @@ public class WallBreakDetectionScript : MonoBehaviour
         Debug.DrawRay(transform.position, transform.right * 6,Color.red);
         Debug.DrawRay(transform.position, -transform.right * 6,Color.red);
         Debug.DrawRay(transform.position, -transform.forward * 6,Color.red);
-        if (!Physics.Raycast(transform.position, transform.forward, out hit, 6)) {   
-           flag=true;
-        }
-        else if (!Physics.Raycast(transform.position, transform.right, out hit, 6)) {   
-            flag=true;
-        }
-        else if (!Physics.Raycast(transform.position, -transform.right, out hit, 6)) {   
-            flag=true;
-        }
-        else if (!Physics.Raycast(transform.position, -transform.forward, out hit, 6)) {   
-            flag=true;
-        }
-        if(flag){
+
+        CheckWall(transform.forward);
+        CheckWall(transform.right);
+        CheckWall(-transform.right);
+        CheckWall(-transform.forward);
+    
+        if(wallBreakFlag){
             Debug.Log("wall missing");
-            // (transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject.SetActive(true);
+            (transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject.SetActive(true);
             Destroy(transform.gameObject);
+        }
+    }
+
+    void CheckWall(Vector3 faceAt){
+        RaycastHit hit;
+        if (!Physics.Raycast(transform.position, faceAt, out hit, 6)) {   
+           wallBreakFlag=true;
+        }
+        else if (hit.transform.name.Contains("Flagged")){
+
         }
     }
 }
