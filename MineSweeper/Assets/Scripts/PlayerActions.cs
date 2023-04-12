@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
     public Camera mainCamera ;
-
+    RaycastHit hit;
+    Ray ray;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +17,21 @@ public class PlayerActions : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0)&&Time.timeScale != 0){
-            Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-            RaycastHit hit;
+            ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             if (Physics.Raycast(ray, out hit)){
                 if(hit.transform.name.Contains("Wall"))
                     Destroy(hit.transform.gameObject);
+            }
+        }
+        else if(Input.GetMouseButtonDown(1)&&Time.timeScale != 0){
+            ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+            if (Physics.Raycast(ray, out hit)){
+                if (hit.transform.name.Contains("Flagged")){
+                    hit.transform.name="Wall";
+                }
+                else if(hit.transform.name.Contains("Wall")){
+                    hit.transform.name="Flagged Wall";
+                }
             }
         }
     }

@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class WallBreakDetectionScript : MonoBehaviour
 {
+    GameObject skyMineCounterCanvas;
+    GameObject flagImage;
+    GameObject mineCounterText;
+
     private bool wallBreakFlag=false;
+    private bool flaggedWallFlag=false;
+
+    void Start(){
+        skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
+        flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
+        mineCounterText=skyMineCounterCanvas.transform.Find("Mine Counter Text (TMP)").gameObject;
+    }
     void Update(){
-        RaycastHit hit;
-        
+        flaggedWallFlag=false;
+
         Debug.DrawRay(transform.position, transform.forward * 6,Color.red);
         Debug.DrawRay(transform.position, transform.right * 6,Color.red);
         Debug.DrawRay(transform.position, -transform.right * 6,Color.red);
@@ -18,9 +29,14 @@ public class WallBreakDetectionScript : MonoBehaviour
         CheckWall(-transform.right);
         CheckWall(-transform.forward);
     
+        if(!flaggedWallFlag){
+            flagImage.SetActive(false);
+        }
+
         if(wallBreakFlag){
             Debug.Log("wall missing");
-            (transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject.SetActive(true);
+            flagImage.SetActive(false);
+            mineCounterText.SetActive(true);
             Destroy(transform.gameObject);
         }
     }
@@ -31,7 +47,8 @@ public class WallBreakDetectionScript : MonoBehaviour
            wallBreakFlag=true;
         }
         else if (hit.transform.name.Contains("Flagged")){
-
+            flagImage.SetActive(true);
+            flaggedWallFlag=true;
         }
     }
 }

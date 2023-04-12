@@ -144,10 +144,11 @@ public class PlaceItems : MonoBehaviour
         int i,j,k,l,count;
         for(i=0;i<mapRow;i++){
             for(j=0;j<mapCol;j++){
+                count=0;
                 if(mapArray[i,j]==1){
+                    ChangeMineCountText(count,i+1,j+1);
                     continue;
                 }
-                count=0;
                 for(k=-1;k<=1;k++){
                     for(l=-1;l<=1;l++){
                         if(i+k<mapRow && i+k>=0 && j+l<mapCol && j+l>=0 && (k!=0 || l!=0)){
@@ -185,6 +186,8 @@ public class PlaceItems : MonoBehaviour
             changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
             changeTextScript.ChangeMineCounterText(count);
         }
+        if(mapArray[row-1,col-1]==2)
+            skyMineCounterText.transform.Find("Mine Counter Text (TMP)").gameObject.SetActive(true);;
 
         
     }

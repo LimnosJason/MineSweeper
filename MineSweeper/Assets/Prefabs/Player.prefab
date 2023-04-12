@@ -2086,6 +2086,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6417682676018321398}
   - component: {fileID: 5374305042656384187}
+  - component: {fileID: 8420819289443889696}
+  - component: {fileID: 7536943096533846570}
   - component: {fileID: 2185476227137148055}
   m_Layer: 0
   m_Name: Mini Map Camera
@@ -2136,7 +2138,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 32.2
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -2152,6 +2154,31 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &8420819289443889696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763025510648958489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f283d05d89e3241be838d22aee8dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniMapCamera: {fileID: 5374305042656384187}
+--- !u!114 &7536943096533846570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763025510648958489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc21b63b938059d4b89a67aca8188692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!81 &2185476227137148055
 AudioListener:
   m_ObjectHideFlags: 0
