@@ -16,21 +16,17 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] GameObject wallBreakDetectionPrefab;
     [SerializeField] GameObject coinPrefab;
 
+    PlayerStatisticsScript playerStatisticsScript;
+    [SerializeField] GameObject playerStatisticsScriptObject;
+    
     private Vector3 savedPosition;
     private int mineNumber;
     private int coinNumber;
     private int mapRow,mapCol;
     private int[,] mapArray;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    
+    void Awake(){
+        playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
     }
 
     public void StartSpawningItems(int row, int col){
@@ -39,6 +35,8 @@ public class PlaceItems : MonoBehaviour
         mapArray = new int[mapRow,mapCol];
         mineNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
         coinNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
+        playerStatisticsScript.SetPlayerFlag(mineNumber);
+
 
         SpawnPlayerRandomly();
         SpawnMineRandomly();

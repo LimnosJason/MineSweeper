@@ -7,10 +7,12 @@ public class PlayerActions : MonoBehaviour
     public Camera mainCamera ;
     RaycastHit hit;
     Ray ray;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+    PlayerStatisticsScript playerStatisticsScript;
+    [SerializeField] GameObject playerStatisticsScriptObject;
+    
+    void Awake(){
+        playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
     }
 
     // Update is called once per frame
@@ -28,9 +30,13 @@ public class PlayerActions : MonoBehaviour
             if (Physics.Raycast(ray, out hit)){
                 if (hit.transform.name.Contains("Flagged")){
                     hit.transform.name="Wall";
+                    playerStatisticsScript.SetPlayerFlag(1);
                 }
                 else if(hit.transform.name.Contains("Wall")){
-                    hit.transform.name="Flagged Wall";
+                    if(playerStatisticsScript.GetPlayerFlag()>0){
+                        hit.transform.name="Flagged Wall";
+                        playerStatisticsScript.SetPlayerFlag(-1);  
+                    }
                 }
             }
         }

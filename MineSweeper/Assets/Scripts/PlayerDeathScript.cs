@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class PlayerDeathScript : MonoBehaviour
 {
-    [SerializeField] GameObject playerBody;
-    Rigidbody rb;
-    public int fallSpeed=100;
+    Animator animator;
 
+    PlayerStatisticsScript playerStatisticsScript;
+    [SerializeField] GameObject playerStatisticsScriptObject;
+
+    private string currentState;
     // Start is called before the first frame update
+
+    void Awake(){
+        playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
+    }
+
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        animator = GetComponent<Animator>();    
     }
     
+    void Update(){
+        if(playerStatisticsScript.GetPlayerHealth()==0){
+            PlayerDeath();
+        }
+    }
+
     public void PlayerDeath(){
-        // if((int)Time.timeScale==1){
-        //     playerBody.transform.Rotate(-90,0,0);
-        //     Debug.Log(playerBody.transform.localRotation.eulerAngles.x);
-        //     if(playerBody.transform.localRotation.eulerAngles.x==270){
-        //         Time.timeScale = 0;
-        //     }
-        // }
+        StartCoroutine(ExampleCoroutine());
+    }
+
+    private void ChangePenguinsAnimationState(string newState){
+        currentState=newState;
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName(currentState))
+            animator.Play(newState);
+    }
+
+    IEnumerator ExampleCoroutine()
+    {
+        yield return new WaitForSeconds(0.7f);
+        ChangePenguinsAnimationState("Dyp_death");
     }
 }

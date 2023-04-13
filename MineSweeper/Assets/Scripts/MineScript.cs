@@ -7,15 +7,24 @@ public class MineScript : MonoBehaviour
     Animator animator;
     public GameObject target;
     public GameObject parent;
+    PlayerStatisticsScript playerStatisticsScript;
+    [SerializeField] GameObject playerStatisticsScriptObject;
 
-    // ChangeTextHealth changeTextHealth;
-    // GameObject changeTextHealthObject;
+    GameObject skyMineCounterCanvas;
+    GameObject flagImage;
+    GameObject mineCounterText;
+
+    public GameObject deadTextureGameObject, normalTextureGameObject;
 
     public int movementSpeed=15;
     private int childCount;
     private string currentState;
     private bool walkingFlag=false;
     private bool explodeFlag=false;
+
+    void Awake(){
+        playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +33,10 @@ public class MineScript : MonoBehaviour
         target = GameObject.Find("Body");
         parent = transform.parent.gameObject;
         childCount = parent.transform.childCount;
+
+        skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
+        flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
+        
     }
 
     // Update is called once per frame
@@ -31,10 +44,19 @@ public class MineScript : MonoBehaviour
     {
         transform.LookAt(target.transform);
         transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
-        if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
-            ChangeAnimationState("walk");
-            walkingFlag=true;
-            Walking();
+        if(!flagImage.activeSelf){
+            normalTextureGameObject.SetActive(true);
+            deadTextureGameObject.SetActive(false);
+            if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
+                ChangeAnimationState("walk");
+                walkingFlag=true;
+                Walking();
+            }
+        }
+        else{
+            movementSpeed=0;
+            normalTextureGameObject.SetActive(false);
+            deadTextureGameObject.SetActive(true);
         }
     }
 
@@ -43,13 +65,13 @@ public class MineScript : MonoBehaviour
         RaycastHit hit;
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.forward * 200,Color.green);
         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.forward, out hit, 200)) {   
-            if(hit.transform.name.Contains("Body"))
+            if(hit.transform.name.Contains("Dyp"))
                 return true;
         }
         return false;
     }
 
-    public void ChangeAnimationState(string newState){
+    private void ChangeAnimationState(string newState){
         currentState=newState;
         if(!animator.GetCurrentAnimatorStateInfo(0).IsName(currentState))
             animator.Play(newState);
@@ -64,14 +86,10 @@ public class MineScript : MonoBehaviour
     public void Explode(Collider other){
         walkingFlag=false;
         if(!explodeFlag){
-            // GameObject player = other.gameObject.transform.parent.gameObject;
-            // changeTextHealthObject=player;
-            // changeTextHealth = changeTextHealthObject.GetComponent<ChangeTextHealth>();
-            // changeTextHealth.ChangeHealthNumberText(100,player);
+            playerStatisticsScript.SetPlayerHealth(playerStatisticsScript.GetPlayerHealth() - 100);
         }
         explodeFlag=true;
         ChangeAnimationState("attack01");
-        StartCoroutine(ExampleCoroutine());
     }
 
     IEnumerator ExampleCoroutine()

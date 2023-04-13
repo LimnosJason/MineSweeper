@@ -20,7 +20,6 @@ public class CoinHitBox : MonoBehaviour
         if(other.name.Contains("Body")){
             randomCoinNumber = Random.Range(100, 250);
             playerStatisticsScript.SetPlayerScore(playerStatisticsScript.GetPlayerScore() + randomCoinNumber);
-            Debug.Log(playerStatisticsScript.GetPlayerScore());
             Destroy(coinStackPrefab);  
         }  
     }

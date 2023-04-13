@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.87180567, g: 0.5439278, b: 0.3932286, a: 1}
+  m_IndirectSpecularColor: {r: 0.950365, g: 0.7623695, b: 0.6457743, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &154991840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,9 +1424,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573616366df3bdb42925804f985a6fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerRoomPrefab: {fileID: 4976138767401851682, guid: 9b7dc6d4180900f48a5d8d72208ec9a2, type: 3}
-  parallelRoomPrefab: {fileID: 4023103058649569898, guid: 4df0683a2eac2374e9e718684cb844c4, type: 3}
-  cubeRoomPrefab: {fileID: 4023103058649569898, guid: d6eb1f1c10c4f9c4abc3ef70d819203a, type: 3}
+  cornerRoomPrefab: {fileID: 4976138767401851682, guid: 9b7dc6d4180900f48a5d8d72208ec9a2,
+    type: 3}
+  parallelRoomPrefab: {fileID: 4023103058649569898, guid: 4df0683a2eac2374e9e718684cb844c4,
+    type: 3}
+  cubeRoomPrefab: {fileID: 4023103058649569898, guid: d6eb1f1c10c4f9c4abc3ef70d819203a,
+    type: 3}
   mapGameObject: {fileID: 1596085216}
   placeItemsObject: {fileID: 1596085216}
 --- !u!114 &1596085219
@@ -1441,13 +1444,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e4697fdc1f9a049ae120db2dd278a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10, type: 3}
-  mineCounterPrefab: {fileID: 6003260681263570288, guid: 9b5524fd867f13f45b9d527c9e54747e, type: 3}
-  skyMineCounterPrefab: {fileID: 1336433398383403266, guid: e194f9841c0000e49ad43a6d15bdb275, type: 3}
+  playerPrefab: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10,
+    type: 3}
+  mineCounterPrefab: {fileID: 6003260681263570288, guid: 9b5524fd867f13f45b9d527c9e54747e,
+    type: 3}
+  skyMineCounterPrefab: {fileID: 1336433398383403266, guid: e194f9841c0000e49ad43a6d15bdb275,
+    type: 3}
   changeTextScriptObject: {fileID: 0}
   minePrefab: {fileID: 1818861082154570, guid: 5e45c8f884f6d124ea0499aae7fdbec8, type: 3}
-  wallBreakDetectionPrefab: {fileID: 944322164368236380, guid: f107c5b6167725549a5ef03492b48d0f, type: 3}
-  coinPrefab: {fileID: 7570534759944381217, guid: 0a6735a5babc585448de13a9af1d1c61, type: 3}
+  wallBreakDetectionPrefab: {fileID: 944322164368236380, guid: f107c5b6167725549a5ef03492b48d0f,
+    type: 3}
+  coinPrefab: {fileID: 7570534759944381217, guid: 0a6735a5babc585448de13a9af1d1c61,
+    type: 3}
+  playerStatisticsScriptObject: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10,
+    type: 3}
 --- !u!1 &1663722087
 GameObject:
   m_ObjectHideFlags: 0
