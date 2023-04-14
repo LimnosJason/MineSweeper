@@ -9,7 +9,9 @@ public class MineScript : MonoBehaviour
     public GameObject parent;
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
-
+    [SerializeField] GameObject mineHitBox;
+    
+    Collider mineHitBoxCollider;
     GameObject skyMineCounterCanvas;
     GameObject flagImage;
     GameObject mineCounterText;
@@ -37,23 +39,27 @@ public class MineScript : MonoBehaviour
         skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
         flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
         
+        mineHitBoxCollider=mineHitBox.GetComponent<Collider>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(target.transform);
         transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
         if(!flagImage.activeSelf){
+            transform.LookAt(target.transform);
             normalTextureGameObject.SetActive(true);
             deadTextureGameObject.SetActive(false);
             if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
+                movementSpeed=15;
                 ChangeAnimationState("walk");
                 walkingFlag=true;
                 Walking();
             }
         }
         else{
+            mineHitBoxCollider.enabled=false;
             movementSpeed=0;
             normalTextureGameObject.SetActive(false);
             deadTextureGameObject.SetActive(true);

@@ -10,7 +10,7 @@ public class WallBreakDetectionScript : MonoBehaviour
 
     private bool wallBreakFlag=false;
     private bool flaggedWallFlag=false;
-
+    
     void Start(){
         skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
         flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
@@ -28,16 +28,16 @@ public class WallBreakDetectionScript : MonoBehaviour
         CheckWall(transform.right);
         CheckWall(-transform.right);
         CheckWall(-transform.forward);
-    
-        if(!flaggedWallFlag){
-            flagImage.SetActive(false);
-        }
 
         if(wallBreakFlag){
             Debug.Log("wall missing");
-            flagImage.SetActive(false);
             mineCounterText.SetActive(true);
             Destroy(transform.gameObject);
+        }
+        else{
+            if(!flaggedWallFlag){
+                flagImage.SetActive(false);
+            }
         }
     }
 

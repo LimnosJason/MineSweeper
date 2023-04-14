@@ -30442,6 +30442,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   playerStatisticsScriptObject: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10,
     type: 3}
+  mineHitBox: {fileID: 2806890376734802922}
   deadTextureGameObject: {fileID: 3355927604216278822}
   normalTextureGameObject: {fileID: 1348996135509312}
   movementSpeed: 15
