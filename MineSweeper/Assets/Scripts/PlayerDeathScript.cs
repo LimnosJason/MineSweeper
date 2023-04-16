@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerDeathScript : MonoBehaviour
 {
     Animator animator;
-
+    Animator playerAnimator;
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
+    [SerializeField] Camera camera;
 
     private string currentState;
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class PlayerDeathScript : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();    
+        playerAnimator = playerStatisticsScriptObject.GetComponent<Animator>();    
     }
     
     void Update(){
@@ -31,15 +33,19 @@ public class PlayerDeathScript : MonoBehaviour
         StartCoroutine(ExampleCoroutine());
     }
 
-    private void ChangePenguinsAnimationState(string newState){
+    private void ChangePenguinsAnimationState(string newState, Animator anim){
         currentState=newState;
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsName(currentState))
-            animator.Play(newState);
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName(currentState))
+            anim.Play(newState);
     }
 
     IEnumerator ExampleCoroutine()
     {
-        yield return new WaitForSeconds(0.7f);
-        ChangePenguinsAnimationState("Dyp_death");
+        yield return new WaitForSeconds(0.1f);
+        playerAnimator.enabled = true;
+        ChangePenguinsAnimationState("DeadDypCamera", playerAnimator);
+        yield return new WaitForSeconds(0.3f);
+        camera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
+        ChangePenguinsAnimationState("Dyp_death", animator);
     }
 }

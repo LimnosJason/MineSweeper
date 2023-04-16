@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Cloud
-  m_Shader: {fileID: 4800000, guid: 14f9a38507ad442499b25b39d051b5f6, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -59,6 +60,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _Bias: 0
     - _BlendOffset: 0.72
@@ -74,9 +76,9 @@ Material:
     - _Float2: 0.1
     - _Float5: 0.12
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 0.638
     - _Mode: 0
     - _NoiseColorScale: -0.47
     - _NoiseSize: 1.35
@@ -94,7 +96,7 @@ Material:
     m_Colors:
     - _BlendColor1: {r: 0.14057496, g: 0.764151, b: 0.72766477, a: 0}
     - _BlendColor2: {r: 0.03702387, g: 0.26028898, b: 0.6037736, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.9150943, g: 0.57484883, b: 0.40056953, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0.7028302, g: 0.965398, b: 1, a: 0}
     - _HighLight: {r: 1, g: 1, b: 1, a: 1}
@@ -102,3 +104,4 @@ Material:
     - _SummedWeight: {r: 0.67, g: 0.62, b: 0, a: 0}
     - _TimeOffset: {r: 0.3, g: 0.3, b: 0, a: 0}
     - _Vector0: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

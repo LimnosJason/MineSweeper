@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1336433397525526596}
   - component: {fileID: 1336433397525526602}
   - component: {fileID: 1336433397525526597}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Mine Counter Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1336433398383403270}
   - component: {fileID: 1336433398383403265}
   - component: {fileID: 1336433398383403264}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Sky MineCounter Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 8873423183519923811}
   - component: {fileID: 6229240637677646911}
   - component: {fileID: 8868869171218918434}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Flag Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

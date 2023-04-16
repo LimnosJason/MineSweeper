@@ -458,6 +458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 805897480955477819}
   - component: {fileID: 716380429538597968}
+  - component: {fileID: 8130569563808450766}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -497,6 +498,27 @@ MonoBehaviour:
   scoreText: {fileID: 6728838904585353703}
   healthBarText: {fileID: 6198086989270435383}
   flagText: {fileID: 4856797696840560672}
+--- !u!95 &8130569563808450766
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805897480955477816}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e2ddd7fd21118c408be009e40696fda, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &805897481300501396
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +547,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805897481300501396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: -0.18}
+  m_LocalPosition: {x: 0, y: 0.6, z: -0.16}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2169,7 +2191,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 383
+    m_Bits: 2431
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 1fdcd345aca1ba848a7ba52460031478, type: 2}
   m_TargetDisplay: 0
@@ -3933,6 +3955,11 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.008970976
       objectReference: {fileID: 0}
+    - target: {fileID: 3303290065660652481, guid: 4290ce8b0eaa54942b193ab7f49c6bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3911862475426650774, guid: 4290ce8b0eaa54942b193ab7f49c6bb3,
         type: 3}
       propertyPath: m_Name
@@ -3965,3 +3992,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatisticsScriptObject: {fileID: 805897480955477816}
+  camera: {fileID: 805897481300501398}
