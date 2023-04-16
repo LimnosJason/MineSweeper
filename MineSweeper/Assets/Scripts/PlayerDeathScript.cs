@@ -6,15 +6,23 @@ public class PlayerDeathScript : MonoBehaviour
 {
     Animator animator;
     Animator playerAnimator;
+
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
-    [SerializeField] Camera camera;
+
+    SettingsScript settingsScript;
+    [SerializeField] GameObject settingsScriptObject;
+
+    [SerializeField] Camera animationCamera;
 
     private string currentState;
     // Start is called before the first frame update
 
+    
+
     void Awake(){
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
+        settingsScript = settingsScriptObject.GetComponent<SettingsScript>();
     }
 
     void Start()
@@ -30,6 +38,7 @@ public class PlayerDeathScript : MonoBehaviour
     }
 
     public void PlayerDeath(){
+        settingsScript.FreezeAndRemoveAim();
         StartCoroutine(ExampleCoroutine());
     }
 
@@ -45,7 +54,7 @@ public class PlayerDeathScript : MonoBehaviour
         playerAnimator.enabled = true;
         ChangePenguinsAnimationState("DeadDypCamera", playerAnimator);
         yield return new WaitForSeconds(0.3f);
-        camera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
+        animationCamera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
         ChangePenguinsAnimationState("Dyp_death", animator);
     }
 }

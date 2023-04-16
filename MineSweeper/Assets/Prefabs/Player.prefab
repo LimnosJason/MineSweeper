@@ -3992,4 +3992,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatisticsScriptObject: {fileID: 805897480955477816}
-  camera: {fileID: 805897481300501398}
+  settingsScriptObject: {fileID: 222625610276284749}
+  animationCamera: {fileID: 805897481300501398}
