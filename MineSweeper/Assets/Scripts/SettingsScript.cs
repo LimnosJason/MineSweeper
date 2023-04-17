@@ -30,7 +30,6 @@ public class SettingsScript : MonoBehaviour
     }
     public void FreezeAndRemoveAim(){
         aimImage.SetActive(false);
-        // Time.timeScale = 0;
     }
     public void SetAllActive(){
         settingsCanvas.SetActive(true);

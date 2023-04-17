@@ -35,7 +35,7 @@ public class PlaceItems : MonoBehaviour
         mapArray = new int[mapRow,mapCol];
         mineNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
         coinNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
-        playerStatisticsScript.SetPlayerFlag(mineNumber);
+        playerStatisticsScript.StartPlayFlag(mineNumber);
 
 
         SpawnPlayerRandomly();

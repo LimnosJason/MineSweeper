@@ -13,7 +13,14 @@ public class PlayerDeathScript : MonoBehaviour
     SettingsScript settingsScript;
     [SerializeField] GameObject settingsScriptObject;
 
+    PlayerCamera playerCamera;
     [SerializeField] Camera animationCamera;
+
+    PlayerMovement playerMovement;
+    [SerializeField] GameObject playerMovementObject;
+
+    TimerScript timerScript;
+    [SerializeField] GameObject timerScriptObject;
 
     private string currentState;
     // Start is called before the first frame update
@@ -23,16 +30,26 @@ public class PlayerDeathScript : MonoBehaviour
     void Awake(){
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
         settingsScript = settingsScriptObject.GetComponent<SettingsScript>();
+        playerCamera = animationCamera.GetComponent<PlayerCamera>();
+        playerMovement = playerMovementObject.GetComponent<PlayerMovement>();
+        timerScript = timerScriptObject.GetComponent<TimerScript>();
     }
 
     void Start()
     {
         animator = GetComponent<Animator>();    
         playerAnimator = playerStatisticsScriptObject.GetComponent<Animator>();    
+
+        timerScript.StartTimer();
+        playerMovement.StartMovement();
+        playerCamera.StartCamera();
     }
     
     void Update(){
         if(playerStatisticsScript.GetPlayerHealth()==0){
+            timerScript.StopTimer();
+            playerMovement.StopMovement();
+            playerCamera.StopCamera();
             PlayerDeath();
         }
     }

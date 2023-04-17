@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = .1f;
     public LayerMask groundMask;
 
+    static bool stopMovement=false;
+
     bool isGrounded;
 
 
@@ -35,13 +37,21 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded && velocity.y<0){
             velocity.y = -2f;
         }
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        
-        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput ;
-        controller.Move(move*movementSpeed*Time.deltaTime);
-        
+        if(!stopMovement){
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            
+            Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput ;
+            controller.Move(move*movementSpeed*Time.deltaTime);
+        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void StopMovement(){
+        stopMovement=true;
+    }
+    public void StartMovement(){
+        stopMovement=false;
     }
 }

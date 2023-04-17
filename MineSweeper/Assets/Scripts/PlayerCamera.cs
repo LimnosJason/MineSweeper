@@ -9,6 +9,7 @@ public class PlayerCamera:MonoBehaviour {
     private bool escapeFlag=false;
     public Transform playerBody;
     float xRotation = 0f;
+    static bool stopCamera=false;
 
     SettingsScript settingsScript;
     [SerializeField] GameObject settingsScriptObject;
@@ -19,15 +20,17 @@ public class PlayerCamera:MonoBehaviour {
 
     void Update() {
         if(!escapeFlag){
-            Cursor.lockState=CursorLockMode.Locked;
-            X = Input.GetAxis("Mouse X") * speed*Time.deltaTime;
-            Y = Input.GetAxis("Mouse Y") * speed*Time.deltaTime;
-            xRotation -= Y;
+            if(!stopCamera){
+                Cursor.lockState=CursorLockMode.Locked;
+                X = Input.GetAxis("Mouse X") * speed*Time.deltaTime;
+                Y = Input.GetAxis("Mouse Y") * speed*Time.deltaTime;
+                xRotation -= Y;
 
-            xRotation = Mathf.Clamp(xRotation, -90f, 45f);
+                xRotation = Mathf.Clamp(xRotation, -90f, 45f);
 
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            playerBody.Rotate(Vector3.up*X);
+                transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                playerBody.Rotate(Vector3.up*X);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape)){
             if(!escapeFlag){
@@ -40,11 +43,14 @@ public class PlayerCamera:MonoBehaviour {
                 ResumeMethod();
             }
         }
-        // }
-        // else{
-        //     Cursor.lockState=CursorLockMode.None;
-        // }
-        
+    }
+
+    public void StopCamera(){
+        stopCamera=true;
+    }
+
+    public void StartCamera(){
+        stopCamera=false;
     }
 
     public void ResumeMethod(){

@@ -14,6 +14,12 @@ public class PlayerStatisticsScript : MonoBehaviour
     public static int playerHealth=100;
     public static int playerflag=0;
 
+    void Awake(){
+        playerScore=0;
+        playerHealth=100;
+        //playerflag=0;
+    }
+
     public int GetPlayerScore(){
         return playerScore;
     }
@@ -42,5 +48,7 @@ public class PlayerStatisticsScript : MonoBehaviour
     public void SetPlayerFlag(int newFlag){
         playerflag+=newFlag;
     }
-
+    public void StartPlayFlag(int newFlag){
+        playerflag=newFlag;
+    }
 }

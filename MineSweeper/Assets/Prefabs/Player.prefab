@@ -3994,3 +3994,5 @@ MonoBehaviour:
   playerStatisticsScriptObject: {fileID: 805897480955477816}
   settingsScriptObject: {fileID: 222625610276284749}
   animationCamera: {fileID: 805897481300501398}
+  playerMovementObject: {fileID: 805897481431236258}
+  timerScriptObject: {fileID: 2356121077739399606}
