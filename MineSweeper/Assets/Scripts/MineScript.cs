@@ -48,7 +48,10 @@ public class MineScript : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
         if(!flagImage.activeSelf){
+            Debug.Log(flagImage.activeSelf);
             transform.LookAt(target.transform);
+            animator.enabled=true;
+            mineHitBoxCollider.enabled=true;
             normalTextureGameObject.SetActive(true);
             deadTextureGameObject.SetActive(false);
             if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
@@ -59,6 +62,7 @@ public class MineScript : MonoBehaviour
             }
         }
         else{
+            animator.enabled=false;
             mineHitBoxCollider.enabled=false;
             movementSpeed=0;
             normalTextureGameObject.SetActive(false);

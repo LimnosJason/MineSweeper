@@ -9,6 +9,7 @@ public class WallBreakDetectionScript : MonoBehaviour
     GameObject mineCounterText;
 
     private bool wallBreakFlag=false;
+    private bool checkAllWallFlags=false;
     private bool flaggedWallFlag=false;
     
     void Start(){
@@ -30,6 +31,9 @@ public class WallBreakDetectionScript : MonoBehaviour
         CheckWall(-transform.forward);
 
         if(wallBreakFlag){
+            if(checkAllWallFlags){
+                Debug.Log("true");
+            }
             Debug.Log("wall missing");
             mineCounterText.SetActive(true);
             Destroy(transform.gameObject);
@@ -37,6 +41,7 @@ public class WallBreakDetectionScript : MonoBehaviour
         else{
             if(!flaggedWallFlag){
                 flagImage.SetActive(false);
+                checkAllWallFlags=false;
             }
         }
     }
@@ -49,6 +54,7 @@ public class WallBreakDetectionScript : MonoBehaviour
         else if (hit.transform.name.Contains("Flagged")){
             flagImage.SetActive(true);
             flaggedWallFlag=true;
+            checkAllWallFlags=true;
         }
     }
 }

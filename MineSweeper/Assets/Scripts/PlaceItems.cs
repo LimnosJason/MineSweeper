@@ -76,7 +76,7 @@ public class PlaceItems : MonoBehaviour
                 savedPosition = selectedRoom.transform.Find("Podium").position;
 
                 GameObject instantiatedObject=Instantiate(minePrefab);
-                instantiatedObject.name = "Mine " + (i+1).ToString();
+                instantiatedObject.name = "Mine";
                 instantiatedObject.transform.SetParent(selectedRoom.transform);
                 instantiatedObject.transform.position = savedPosition;
 
