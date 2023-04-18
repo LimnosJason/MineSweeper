@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WallBreakDetectionScript : MonoBehaviour
 {
+    [SerializeField] GameObject minePrefab;
+
     GameObject skyMineCounterCanvas;
     GameObject flagImage;
     GameObject mineCounterText;
@@ -32,7 +34,11 @@ public class WallBreakDetectionScript : MonoBehaviour
 
         if(wallBreakFlag){
             if(checkAllWallFlags){
-                Debug.Log("true");
+                if(!(transform.parent.gameObject).transform.Find("Mine")){
+                    SpawnMineOnWrongAnswer();
+                    SpawnMineOnWrongAnswer();
+                    SpawnMineOnWrongAnswer();
+                }
             }
             Debug.Log("wall missing");
             mineCounterText.SetActive(true);
@@ -56,5 +62,12 @@ public class WallBreakDetectionScript : MonoBehaviour
             flaggedWallFlag=true;
             checkAllWallFlags=true;
         }
+    }
+
+    void SpawnMineOnWrongAnswer(){
+        GameObject instantiatedObject=Instantiate(minePrefab);
+        instantiatedObject.name = "Wrong Answer Mine";
+        instantiatedObject.transform.SetParent(transform.parent);
+        instantiatedObject.transform.position = skyMineCounterCanvas.transform.position;
     }
 }

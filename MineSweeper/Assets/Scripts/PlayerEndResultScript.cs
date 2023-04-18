@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeathScript : MonoBehaviour
+public class PlayerEndResultScript : MonoBehaviour
 {
-    Animator animator;
+    static Animator animator;
     Animator playerAnimator;
 
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
 
-    SettingsScript settingsScript;
+    static SettingsScript settingsScript;
     [SerializeField] GameObject settingsScriptObject;
 
     PlayerCamera playerCamera;
@@ -29,10 +29,10 @@ public class PlayerDeathScript : MonoBehaviour
 
     void Awake(){
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
-        settingsScript = settingsScriptObject.GetComponent<SettingsScript>();
         playerCamera = animationCamera.GetComponent<PlayerCamera>();
         playerMovement = playerMovementObject.GetComponent<PlayerMovement>();
         timerScript = timerScriptObject.GetComponent<TimerScript>();
+        settingsScript = settingsScriptObject.GetComponent<SettingsScript>();
     }
 
     void Start()
@@ -56,7 +56,14 @@ public class PlayerDeathScript : MonoBehaviour
 
     public void PlayerDeath(){
         settingsScript.FreezeAndRemoveAim();
-        StartCoroutine(ExampleCoroutine());
+        StartCoroutine(LoseCoroutine());
+    }
+
+    public void PlayerWin(){
+        settingsScript.FreezeAndRemoveAim();
+        // playerAnimator.enabled = true;
+        animationCamera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
+        ChangePenguinsAnimationState("Dyp_jump_01", animator);
     }
 
     private void ChangePenguinsAnimationState(string newState, Animator anim){
@@ -65,7 +72,7 @@ public class PlayerDeathScript : MonoBehaviour
             anim.Play(newState);
     }
 
-    IEnumerator ExampleCoroutine()
+    IEnumerator LoseCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
         playerAnimator.enabled = true;

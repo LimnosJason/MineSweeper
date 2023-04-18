@@ -10,11 +10,17 @@ public class PlayerStatisticsScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI healthBarText;
     [SerializeField] TextMeshProUGUI flagText;
 
+    PlayerEndResultScript playerEndResultScript;
+    [SerializeField] GameObject playerEndResultScriptObject;
+
     public static int playerScore=0;
     public static int playerHealth=100;
     public static int playerflag=0;
 
+    private int currentMineNumber=0;
+
     void Awake(){
+
         playerScore=0;
         playerHealth=100;
         //playerflag=0;
@@ -50,5 +56,17 @@ public class PlayerStatisticsScript : MonoBehaviour
     }
     public void StartPlayFlag(int newFlag){
         playerflag=newFlag;
+    }
+
+    public void CallPlayerWin(int change){
+        currentMineNumber+=change;
+        Debug.Log(currentMineNumber);
+        if(currentMineNumber==0){
+            playerEndResultScript = playerEndResultScriptObject.GetComponent<PlayerEndResultScript>();
+            Debug.Log(playerEndResultScriptObject);
+            Debug.Log("Active? "+playerEndResultScriptObject.activeInHierarchy);
+            Debug.Log(playerEndResultScript);
+            playerEndResultScript.PlayerWin();
+        }
     }
 }

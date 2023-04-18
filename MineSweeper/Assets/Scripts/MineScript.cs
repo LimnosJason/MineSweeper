@@ -7,10 +7,12 @@ public class MineScript : MonoBehaviour
     Animator animator;
     public GameObject target;
     public GameObject parent;
+
+
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
     [SerializeField] GameObject mineHitBox;
-    
+
     Collider mineHitBoxCollider;
     GameObject skyMineCounterCanvas;
     GameObject flagImage;
@@ -23,6 +25,8 @@ public class MineScript : MonoBehaviour
     private string currentState;
     private bool walkingFlag=false;
     private bool explodeFlag=false;
+
+    private bool wrongAnswerMine=false;
 
     void Awake(){
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
@@ -41,17 +45,23 @@ public class MineScript : MonoBehaviour
         
         mineHitBoxCollider=mineHitBox.GetComponent<Collider>();
         
+        if(gameObject.name.Contains("Wrong")){
+            wrongAnswerMine=true;
+        }
+        playerStatisticsScript.CallPlayerWin(1);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
-        if(!flagImage.activeSelf){
-            Debug.Log(flagImage.activeSelf);
+        if(!flagImage.activeSelf||wrongAnswerMine){
             transform.LookAt(target.transform);
             animator.enabled=true;
             mineHitBoxCollider.enabled=true;
+            if(deadTextureGameObject.activeSelf){
+                playerStatisticsScript.CallPlayerWin(1);
+            }
             normalTextureGameObject.SetActive(true);
             deadTextureGameObject.SetActive(false);
             if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
@@ -61,12 +71,13 @@ public class MineScript : MonoBehaviour
                 Walking();
             }
         }
-        else{
+        else if(!deadTextureGameObject.activeSelf){
             animator.enabled=false;
             mineHitBoxCollider.enabled=false;
             movementSpeed=0;
             normalTextureGameObject.SetActive(false);
             deadTextureGameObject.SetActive(true);
+            playerStatisticsScript.CallPlayerWin(-1);
         }
     }
 
