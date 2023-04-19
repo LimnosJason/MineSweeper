@@ -60,12 +60,8 @@ public class PlayerStatisticsScript : MonoBehaviour
 
     public void CallPlayerWin(int change){
         currentMineNumber+=change;
-        Debug.Log(currentMineNumber);
         if(currentMineNumber==0){
             playerEndResultScript = playerEndResultScriptObject.GetComponent<PlayerEndResultScript>();
-            Debug.Log(playerEndResultScriptObject);
-            Debug.Log("Active? "+playerEndResultScriptObject.activeInHierarchy);
-            Debug.Log(playerEndResultScript);
             playerEndResultScript.PlayerWin();
         }
     }

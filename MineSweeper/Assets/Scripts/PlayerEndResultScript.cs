@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerEndResultScript : MonoBehaviour
 {
@@ -60,10 +61,9 @@ public class PlayerEndResultScript : MonoBehaviour
     }
 
     public void PlayerWin(){
+        Cursor.lockState=CursorLockMode.None;
         settingsScript.FreezeAndRemoveAim();
-        // playerAnimator.enabled = true;
-        animationCamera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
-        ChangePenguinsAnimationState("Dyp_jump_01", animator);
+        SceneManager.LoadScene("WinningScene");
     }
 
     private void ChangePenguinsAnimationState(string newState, Animator anim){

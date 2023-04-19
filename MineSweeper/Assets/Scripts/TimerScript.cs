@@ -9,7 +9,7 @@ public class TimerScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     private static bool start=true;
     
-    private float timer = 0;
+    public static float timer = 0;
     // Start is called before the first frame update
     void Start()
     {

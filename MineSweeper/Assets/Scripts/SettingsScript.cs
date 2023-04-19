@@ -37,7 +37,7 @@ public class SettingsScript : MonoBehaviour
     }
     public void SetAllInactive(){
         settingsCanvas.SetActive(false);
-         aimImage.SetActive(true);
+        aimImage.SetActive(true);
     }
 
     public void ResumeButton(){
