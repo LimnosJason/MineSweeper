@@ -56,6 +56,7 @@ public class PlayerEndResultScript : MonoBehaviour
     }
 
     public void PlayerDeath(){
+        Cursor.lockState=CursorLockMode.None;
         settingsScript.FreezeAndRemoveAim();
         StartCoroutine(LoseCoroutine());
     }
