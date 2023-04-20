@@ -2001,7 +2001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8272112677636977813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5950,3 +5950,4 @@ MonoBehaviour:
   animationCamera: {fileID: 805897481300501398}
   playerMovementObject: {fileID: 805897481431236258}
   timerScriptObject: {fileID: 2356121077739399606}
+  loseCanvas: {fileID: 1742281020934977598}

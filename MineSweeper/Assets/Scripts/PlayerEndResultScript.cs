@@ -23,6 +23,8 @@ public class PlayerEndResultScript : MonoBehaviour
     TimerScript timerScript;
     [SerializeField] GameObject timerScriptObject;
 
+    [SerializeField] GameObject loseCanvas;
+
     private string currentState;
     // Start is called before the first frame update
 
@@ -81,5 +83,7 @@ public class PlayerEndResultScript : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         animationCamera.cullingMask |= 1 << LayerMask.NameToLayer("Character");
         ChangePenguinsAnimationState("Dyp_death", animator);
+        yield return new WaitForSeconds(0.8f);
+        loseCanvas.SetActive(true);
     }
 }
