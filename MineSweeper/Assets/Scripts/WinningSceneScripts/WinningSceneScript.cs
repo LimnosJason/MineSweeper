@@ -75,7 +75,13 @@ public class WinningSceneScript : MonoBehaviour
 
     public void NextLevelButton(){
         Time.timeScale = 1;
-        SceneManager.LoadScene("MenuScene");
+        if(PlayButtonScript.sandboxFlag==0){
+            SceneManager.LoadScene("MenuScene");
+        }
+        else{
+            PlayButtonScript.sandboxFlag++;
+            MapSettingsScript.SetSettingsOfMap(PlayButtonScript.sandboxFlag);
+        }
     }
     
 }

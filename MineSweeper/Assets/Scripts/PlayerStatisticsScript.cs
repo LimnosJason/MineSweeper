@@ -17,10 +17,10 @@ public class PlayerStatisticsScript : MonoBehaviour
     public static int playerHealth=100;
     public static int playerflag=0;
 
-    private int currentMineNumber=0;
+    private static int currentMineNumber=0;
 
     void Awake(){
-
+        currentMineNumber=0;
         playerScore=0;
         playerHealth=100;
         //playerflag=0;
@@ -59,7 +59,9 @@ public class PlayerStatisticsScript : MonoBehaviour
     }
 
     public void CallPlayerWin(int change){
+        Debug.Log(currentMineNumber);
         currentMineNumber+=change;
+        Debug.Log(currentMineNumber);
         if(currentMineNumber==0){
             playerEndResultScript = playerEndResultScriptObject.GetComponent<PlayerEndResultScript>();
             playerEndResultScript.PlayerWin();

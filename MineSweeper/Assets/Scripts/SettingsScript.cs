@@ -51,6 +51,11 @@ public class SettingsScript : MonoBehaviour
 
     public void MainMenuButton(){
         Time.timeScale = 1;
-        SceneManager.LoadScene("MenuScene");
+        if(PlayButtonScript.sandboxFlag==0){
+            SceneManager.LoadScene("MenuScene");
+        }
+        else{
+            SceneManager.LoadScene("ChooseGame");
+        }
     }
 }

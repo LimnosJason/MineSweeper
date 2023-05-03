@@ -23,11 +23,11 @@ public class WallBreakDetectionScript : MonoBehaviour
         if(transform.parent.gameObject.transform.Find("Canvas(Clone)")){
             mineCounterCanvas=(transform.parent.gameObject).transform.Find("Canvas(Clone)").gameObject;
         }
-        else if(!transform.parent.gameObject.transform.Find("Mine")){
-            CheckWall(transform.forward,true);
-            CheckWall(transform.right,true);
-            CheckWall(-transform.right,true);
-            CheckWall(-transform.forward,true);
+        else if(transform.parent.gameObject.transform.Find("Mine")){
+            MineWallCheck(transform.forward);
+            MineWallCheck(transform.right);
+            MineWallCheck(-transform.right);
+            MineWallCheck(-transform.forward);
         }
     }
     void Update(){
@@ -56,6 +56,12 @@ public class WallBreakDetectionScript : MonoBehaviour
             if(mineCounterCanvas!=null){
                 mineCounterCanvas.SetActive(true);
             }
+            else{
+                CheckWall(transform.forward,true);
+                CheckWall(transform.right,true);
+                CheckWall(-transform.right,true);
+                CheckWall(-transform.forward,true);
+            }
             Destroy(transform.gameObject);
         }
         else{
@@ -66,11 +72,11 @@ public class WallBreakDetectionScript : MonoBehaviour
         }
     }
 
-    void CheckWall(Vector3 faceAt,bool breakWall){
+    public void CheckWall(Vector3 faceAt,bool breakWall){
         RaycastHit hit;
         if(breakWall){
             if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {   
-                if(hit.transform.name.Contains("Wall")){
+                if(!hit.transform.name.Contains("Flagged") && !hit.transform.name.Contains("Mine") && !hit.transform.name.Contains("Border")){
                     Destroy(hit.transform.gameObject); 
                 }
             }
@@ -83,6 +89,15 @@ public class WallBreakDetectionScript : MonoBehaviour
                 flagImage.SetActive(true);
                 flaggedWallFlag=true;
                 checkAllWallFlags=true;
+            }
+        }
+    }
+
+    void MineWallCheck(Vector3 faceAt){
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {   
+            if(hit.transform.name.Contains("Wall")){
+                hit.transform.name="Mine Wall";
             }
         }
     }

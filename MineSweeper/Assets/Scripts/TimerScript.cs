@@ -11,9 +11,9 @@ public class TimerScript : MonoBehaviour
     
     public static float timer = 0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        timer = 0;
     }
 
     // Update is called once per frame
