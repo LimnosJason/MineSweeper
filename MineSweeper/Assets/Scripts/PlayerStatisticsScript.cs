@@ -59,9 +59,7 @@ public class PlayerStatisticsScript : MonoBehaviour
     }
 
     public void CallPlayerWin(int change){
-        Debug.Log(currentMineNumber);
         currentMineNumber+=change;
-        Debug.Log(currentMineNumber);
         if(currentMineNumber==0){
             playerEndResultScript = playerEndResultScriptObject.GetComponent<PlayerEndResultScript>();
             playerEndResultScript.PlayerWin();

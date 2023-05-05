@@ -26,6 +26,7 @@ public class PlayerActions : MonoBehaviour
             }
         }
         else if(Input.GetMouseButtonDown(1)&&Time.timeScale != 0){
+            // Debug.Log(hit.transform.gameObject.GetComponent<Renderer>().material);
             ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             if (Physics.Raycast(ray, out hit)){
                 if (hit.transform.name.Contains("Flagged")){

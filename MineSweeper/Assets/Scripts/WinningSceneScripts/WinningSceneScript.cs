@@ -47,24 +47,8 @@ public class WinningSceneScript : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         else{
-            if(currentPlayerTimer<=180 && currentPlayerTimer>120){
-                leftStar.SetActive(true);
-                leftNonStar.SetActive(false);
-            }
-            else if(currentPlayerTimer<=120 && currentPlayerTimer>60){
-                leftStar.SetActive(true);
-                leftNonStar.SetActive(false);
-                rightStar.SetActive(true);
-                rightNonStar.SetActive(false);
-            }
-            else if(currentPlayerTimer<=60){
-                leftStar.SetActive(true);
-                leftNonStar.SetActive(false);
-                rightStar.SetActive(true);
-                rightNonStar.SetActive(false);
-                upStar.SetActive(true);
-                upNonStar.SetActive(false);
-            }
+            StartCoroutine(WaitForFunction());
+            
         }
     }
 
@@ -83,5 +67,31 @@ public class WinningSceneScript : MonoBehaviour
             MapSettingsScript.SetSettingsOfMap(PlayButtonScript.sandboxFlag);
         }
     }
-    
+
+    IEnumerator WaitForFunction()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if(currentPlayerTimer<=180 && currentPlayerTimer>120){
+            leftStar.SetActive(true);
+            leftNonStar.SetActive(false);
+        }
+        else if(currentPlayerTimer<=120 && currentPlayerTimer>60){
+            leftStar.SetActive(true);
+            leftNonStar.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            rightStar.SetActive(true);
+            rightNonStar.SetActive(false);
+        }
+        else if(currentPlayerTimer<=60){
+            leftStar.SetActive(true);
+            leftNonStar.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            rightStar.SetActive(true);
+            rightNonStar.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            upStar.SetActive(true);
+            upNonStar.SetActive(false);
+        }
+    }
+
 }

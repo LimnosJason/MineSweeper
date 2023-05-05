@@ -18,12 +18,16 @@ public class PlaceItems : MonoBehaviour
 
     PlayerStatisticsScript playerStatisticsScript;
     [SerializeField] GameObject playerStatisticsScriptObject;
+
+    MineScript mineScript;
     
     private Vector3 savedPosition;
     private int mineNumber;
     private int coinNumber;
     private int mapRow,mapCol;
     private int[,] mapArray;
+
+    List<GameObject> totalMinesList = new List<GameObject>();
     
     void Awake(){
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
@@ -80,6 +84,8 @@ public class PlaceItems : MonoBehaviour
                 instantiatedObject.transform.SetParent(selectedRoom.transform);
                 instantiatedObject.transform.position = savedPosition;
 
+                totalMinesList.Add(instantiatedObject);
+                
                 mapArray[randomRow-1,randomCol-1]=1;
             }
             else{
@@ -209,5 +215,14 @@ public class PlaceItems : MonoBehaviour
                 }
             }
         }    
+    }
+
+    public GameObject GetRandomMine(){
+        int randomPosition;
+        do{
+            randomPosition = Random.Range(0, totalMinesList.Count);
+            mineScript = totalMinesList[randomPosition].GetComponent<MineScript>();
+        }while(mineScript.movementSpeed==15);
+        return totalMinesList[randomPosition];
     }
 }

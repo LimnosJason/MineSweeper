@@ -11,11 +11,17 @@ public class WallBreakDetectionScript : MonoBehaviour
     GameObject mineCounterText;
     GameObject mineCounterCanvas=null;
 
+    public Material wallFlagMaterial;
+    public Material wallMaterial;
+
     private bool wallBreakFlag=false;
     private bool checkAllWallFlags=false;
     private bool flaggedWallFlag=false;
+
+    private int mineWallCounter=0;
     
     void Start(){
+
         skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
         flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
         mineCounterText=skyMineCounterCanvas.transform.Find("Mine Counter Text (TMP)").gameObject;
@@ -51,7 +57,6 @@ public class WallBreakDetectionScript : MonoBehaviour
                     SpawnMineOnWrongAnswer();
                 }
             }
-            Debug.Log("wall missing");
             mineCounterText.SetActive(true);
             if(mineCounterCanvas!=null){
                 mineCounterCanvas.SetActive(true);
@@ -68,14 +73,20 @@ public class WallBreakDetectionScript : MonoBehaviour
             if(!flaggedWallFlag){
                 flagImage.SetActive(false);
                 checkAllWallFlags=false;
+
+                ChangeWallMaterial(transform.forward,false);
+                ChangeWallMaterial(transform.right,false);
+                ChangeWallMaterial(-transform.right,false);
+                ChangeWallMaterial(-transform.forward,false);
             }
         }
     }
 
     public void CheckWall(Vector3 faceAt,bool breakWall){
         RaycastHit hit;
+        // Debug.Log(mineWallCounter);
         if(breakWall){
-            if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {   
+            if (Physics.Raycast(transform.position, faceAt, out hit, 6)) { 
                 if(!hit.transform.name.Contains("Flagged") && !hit.transform.name.Contains("Mine") && !hit.transform.name.Contains("Border")){
                     Destroy(hit.transform.gameObject); 
                 }
@@ -89,6 +100,11 @@ public class WallBreakDetectionScript : MonoBehaviour
                 flagImage.SetActive(true);
                 flaggedWallFlag=true;
                 checkAllWallFlags=true;
+
+                ChangeWallMaterial(transform.forward,true);
+                ChangeWallMaterial(transform.right,true);
+                ChangeWallMaterial(-transform.right,true);
+                ChangeWallMaterial(-transform.forward,true);
             }
         }
     }
@@ -102,10 +118,33 @@ public class WallBreakDetectionScript : MonoBehaviour
         }
     }
 
+    void CountMineWalls(Vector3 faceAt){
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
+            if(hit.transform.name.Contains("Mine")){
+                mineWallCounter++;
+            }
+        }
+    }
+
     void SpawnMineOnWrongAnswer(){
         GameObject instantiatedObject=Instantiate(minePrefab);
         instantiatedObject.name = "Wrong Answer Mine";
         instantiatedObject.transform.SetParent(transform.parent);
         instantiatedObject.transform.position = skyMineCounterCanvas.transform.position;
+    }
+
+    void ChangeWallMaterial(Vector3 faceAt,bool flagCheck){
+        RaycastHit hit;
+        if(flagCheck){
+            if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
+                hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallFlagMaterial;
+            }
+        }
+        else{
+            if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
+                hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallMaterial;
+            }
+        }
     }
 }
