@@ -6,11 +6,7 @@ using UnityEngine.SceneManagement;
 public class SettingsScript : MonoBehaviour
 {
     [SerializeField] GameObject settingsCanvas;
-    [SerializeField] GameObject resumeButton;
-    [SerializeField] GameObject restartButton;
-    [SerializeField] GameObject mainMenuButton;
-    [SerializeField] GameObject settingsButton;
-    [SerializeField] GameObject helpButton;
+    [SerializeField] GameObject helpCanvas;
 
     [SerializeField] GameObject aimImage;
     
@@ -37,6 +33,7 @@ public class SettingsScript : MonoBehaviour
     }
     public void SetAllInactive(){
         settingsCanvas.SetActive(false);
+        helpCanvas.SetActive(false);
         aimImage.SetActive(true);
     }
 
@@ -57,5 +54,10 @@ public class SettingsScript : MonoBehaviour
         else{
             SceneManager.LoadScene("ChooseGame");
         }
+    }
+    
+    public void HelpButton(){
+        helpCanvas.SetActive(true);
+        settingsCanvas.SetActive(false);
     }
 }
