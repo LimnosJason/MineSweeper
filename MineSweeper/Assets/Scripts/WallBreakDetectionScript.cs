@@ -106,6 +106,15 @@ public class WallBreakDetectionScript : MonoBehaviour
                 ChangeWallMaterial(-transform.right,true);
                 ChangeWallMaterial(-transform.forward,true);
             }
+            else if (hit.transform.name.Contains("RemoveF")){
+                flagImage.SetActive(false);
+                flaggedWallFlag=false;
+
+                ChangeWallMaterial(transform.forward,false);
+                ChangeWallMaterial(transform.right,false);
+                ChangeWallMaterial(-transform.right,false);
+                ChangeWallMaterial(-transform.forward,false);
+            }
         }
     }
 
@@ -139,11 +148,16 @@ public class WallBreakDetectionScript : MonoBehaviour
         if(flagCheck){
             if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
                 hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallFlagMaterial;
+                // if(!hit.transform.name.Contains("Flagged")&&!hit.transform.name.Contains("RemoveF")&&!hit.transform.name.Contains("Border")){
+                if(hit.transform.name=="Wall"){
+                    hit.transform.name="Wall HiddenF";
+                }
             }
         }
         else{
-            if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
+            if (Physics.Raycast(transform.position, faceAt, out hit, 6)&&!hit.transform.name.Contains("Border")&&!hit.transform.name.Contains("Mine")) {
                 hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallMaterial;
+                hit.transform.name="Wall";
             }
         }
     }

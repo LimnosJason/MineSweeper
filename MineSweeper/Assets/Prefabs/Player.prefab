@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 805897481300501398}
+  wallMaterial: {fileID: 2100000, guid: 4c68e9d026a3b0e418084be51ac12df0, type: 2}
   playerStatisticsScriptObject: {fileID: 805897480955477816}
 --- !u!1 &805897481431236258
 GameObject:

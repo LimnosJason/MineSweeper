@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
     public Camera mainCamera ;
+    public Material wallMaterial;
     RaycastHit hit;
     Ray ray;
 
@@ -29,8 +30,8 @@ public class PlayerActions : MonoBehaviour
             // Debug.Log(hit.transform.gameObject.GetComponent<Renderer>().material);
             ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             if (Physics.Raycast(ray, out hit)){
-                if (hit.transform.name.Contains("Flagged")){
-                    hit.transform.name="Wall";
+                if (hit.transform.name.Contains("Flagged")||hit.transform.name.Contains("HiddenF")){
+                    hit.transform.name="Wall RemoveF";
                     playerStatisticsScript.SetPlayerFlag(1);
                 }
                 else if(hit.transform.name.Contains("Wall")){
