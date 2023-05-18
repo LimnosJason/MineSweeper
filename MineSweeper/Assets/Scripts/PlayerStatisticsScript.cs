@@ -17,6 +17,14 @@ public class PlayerStatisticsScript : MonoBehaviour
     public static int playerHealth=100;
     public static int playerflag=0;
 
+    public static int playerExtraFlagItem;
+    public static int playerExtraRandomNoMineItem;
+    public static int playerExtraRandomMineItem;
+
+    [SerializeField] TextMeshProUGUI playerExtraFlagItemText;
+    [SerializeField] TextMeshProUGUI playerExtraRandomMineItemText;
+    [SerializeField] TextMeshProUGUI playerExtraRandomNoMineItemText;
+
     private static int currentMineNumber=0;
 
     void Awake(){
@@ -24,6 +32,14 @@ public class PlayerStatisticsScript : MonoBehaviour
         playerScore=0;
         playerHealth=100;
         //playerflag=0;
+        playerExtraFlagItem=PlayerPrefs.GetInt("item 1");
+        playerExtraFlagItemText.text=playerExtraFlagItem.ToString();
+
+        playerExtraRandomNoMineItem=PlayerPrefs.GetInt("item 2");
+        playerExtraRandomNoMineItemText.text = playerExtraRandomNoMineItem.ToString();
+
+        playerExtraRandomMineItem = PlayerPrefs.GetInt("item 3");
+        playerExtraRandomMineItemText.text = playerExtraRandomMineItem.ToString();
     }
 
     public int GetPlayerScore(){
@@ -37,6 +53,31 @@ public class PlayerStatisticsScript : MonoBehaviour
     }
 
     public void Update(){
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            if(playerExtraRandomNoMineItem>0){
+                playerExtraRandomNoMineItem--;
+                playerExtraRandomNoMineItemText.text = playerExtraRandomNoMineItem.ToString();
+                PlayerPrefs.SetInt("item 2",PlayerPrefs.GetInt("item 2")-1);
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){
+            if(playerExtraRandomMineItem>0){
+                playerExtraRandomMineItem--;
+                playerExtraRandomMineItemText.text = playerExtraRandomMineItem.ToString();
+                PlayerPrefs.SetInt("item 3",PlayerPrefs.GetInt("item 3")-1);
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha3)){
+            if(playerExtraFlagItem>0){
+                playerExtraFlagItem--;
+                playerExtraFlagItemText.text=playerExtraFlagItem.ToString();
+                PlayerPrefs.SetInt("item 1",PlayerPrefs.GetInt("item 1")-1);
+
+                SetPlayerFlag(1);
+            }
+        }
+
         scoreText.text=GetPlayerScore().ToString();
         healthBarText.text=GetPlayerHealth().ToString()+"%";
         flagText.text=GetPlayerFlag().ToString();

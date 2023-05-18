@@ -10,12 +10,10 @@ public class ShowTotalCoins : MonoBehaviour
 
     void Start()
     {
-        coinText.text=PlayerPrefs.GetInt("coinCounter").ToString();
+        UpdateTotalCoins();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void UpdateTotalCoins(){
+        coinText.text=PlayerPrefs.GetInt("coinCounter").ToString();
     }
 }

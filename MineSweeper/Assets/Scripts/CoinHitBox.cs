@@ -18,7 +18,7 @@ public class CoinHitBox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.name.Contains("Body")){
-            randomCoinNumber = Random.Range(100, 250);
+            randomCoinNumber = Random.Range(100000, 25000);
             playerStatisticsScript.SetPlayerScore(playerStatisticsScript.GetPlayerScore() + randomCoinNumber);
             Destroy(coinStackPrefab);  
         }  
