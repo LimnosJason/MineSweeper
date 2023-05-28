@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MapSettingsScript : MonoBehaviour
 {
+
     [SerializeField] Sprite emptyStar;
     [SerializeField] Sprite filledStar;
 
@@ -30,7 +31,9 @@ public class MapSettingsScript : MonoBehaviour
                 if(i!=9){
                     nextButton = GameObject.Find("Button "+(i+1));
                     lockImage=nextButton.transform.Find("Lock").gameObject;
-                    lockImage.SetActive(false);
+                    if(lockImage.activeSelf){
+                        lockImage.SetActive(false);
+                    }
                 }
                 if(totalStars==3){ 
                     currentButton.transform.Find("Image").gameObject.GetComponent<Image>().sprite=filledStar;                   

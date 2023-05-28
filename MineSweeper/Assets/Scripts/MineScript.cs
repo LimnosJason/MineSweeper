@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MineScript : MonoBehaviour
 {
+    
     Animator animator;
+    public AudioSource explosionSound;
     public GameObject target;
     public GameObject parent;
 
@@ -84,7 +86,7 @@ public class MineScript : MonoBehaviour
     private bool RaycastCheck(){
         //Ray ray = GameObject.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         RaycastHit hit;
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.forward * 200,Color.green);
+        // Debug.DrawRay(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.forward * 200,Color.green);
         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.forward, out hit, 200)) {   
             if(hit.transform.name.Contains("Dyp"))
                 return true;
@@ -110,6 +112,7 @@ public class MineScript : MonoBehaviour
             playerStatisticsScript.SetPlayerHealth(playerStatisticsScript.GetPlayerHealth() - 100);
         }
         explodeFlag=true;
+        explosionSound.Play(0);
         ChangeAnimationState("attack01");
     }
 

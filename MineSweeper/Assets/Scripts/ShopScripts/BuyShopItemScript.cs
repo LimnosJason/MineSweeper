@@ -5,6 +5,7 @@ using TMPro;
 
 public class BuyShopItemScript : MonoBehaviour
 {
+    public Material hatColor;
 
     private int playerCoins;
 
@@ -38,10 +39,13 @@ public class BuyShopItemScript : MonoBehaviour
                 PlayerPrefs.SetInt("item 3",PlayerPrefs.GetInt("item 3")+1);
             }
             else if(itemCost==10000){
-                PlayerPrefs.SetInt("item 4",1);
+                hatColor.SetColor("_Color", new Color(Random.Range(0.0f, 1.1f), Random.Range(0.0f, 1.1f), Random.Range(0.0f, 1.1f), 1));
             }
             else if(itemCost==20000){
                 PlayerPrefs.SetInt("item 5",1);
+            }
+            else if(itemCost==50000){
+                PlayerPrefs.SetInt("item 6",1);
             }
         }
     }

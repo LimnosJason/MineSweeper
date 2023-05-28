@@ -20,6 +20,8 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] GameObject playerStatisticsScriptObject;
 
     MineScript mineScript;
+
+    CoinHitBox coinHitBox;
     
     private Vector3 savedPosition;
     private int mineNumber;
@@ -27,9 +29,13 @@ public class PlaceItems : MonoBehaviour
     private int mapRow,mapCol;
     private int[,] mapArray;
 
-    List<GameObject> totalMinesList = new List<GameObject>();
+    private static List<GameObject> totalMinesList = new List<GameObject>();
+    private static List<GameObject> totalCoinsList = new List<GameObject>();
+    private static List<GameObject> clonedTotalCoinsList;
     
     void Awake(){
+        totalMinesList.Clear();
+        totalCoinsList.Clear();
         playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
     }
 
@@ -55,6 +61,8 @@ public class PlaceItems : MonoBehaviour
         randomRow = Random.Range(1, mapRow+1);
         randomCol = Random.Range(1, mapCol+1);
         
+        Debug.Log(randomRow);
+        Debug.Log(randomCol);
         FindSelectedRoom(randomRow,randomCol);
 
         savedPosition = selectedRoom.transform.Find("Podium").position;
@@ -110,6 +118,8 @@ public class PlaceItems : MonoBehaviour
                 instantiatedObject.transform.SetParent(selectedRoom.transform);
                 instantiatedObject.transform.position = savedPosition;
 
+                totalCoinsList.Add(instantiatedObject);
+
                 mapArray[randomRow-1,randomCol-1]=3;
             }
             else{
@@ -117,6 +127,7 @@ public class PlaceItems : MonoBehaviour
                 continue;
             }
         }
+        clonedTotalCoinsList = new List<GameObject>(totalCoinsList);
     }
 
     GameObject FindSelectedRoom(int row,int col){
@@ -222,7 +233,50 @@ public class PlaceItems : MonoBehaviour
         do{
             randomPosition = Random.Range(0, totalMinesList.Count);
             mineScript = totalMinesList[randomPosition].GetComponent<MineScript>();
-        }while(mineScript.movementSpeed==15);
+        }while(mineScript.movementSpeed!=15);
         return totalMinesList[randomPosition];
+    }
+
+    public GameObject GetRandomCoin(){
+        int randomPosition;
+        bool repeat;
+        GameObject sentCoin;
+        do{
+            if(totalCoinsList.Count==0){
+                return null;
+            }
+            do{
+                repeat=false;
+                randomPosition = Random.Range(0, totalCoinsList.Count);
+                if(totalCoinsList[randomPosition]==null){
+                    totalCoinsList.RemoveAt(randomPosition);
+                    repeat=true;
+                }
+            }while(repeat);
+            if(totalCoinsList[randomPosition].transform.parent.gameObject.transform.Find("WallBreakDetection")==null){
+                totalCoinsList.RemoveAt(randomPosition);
+                repeat=true;
+            }
+        }while(repeat);
+        sentCoin=totalCoinsList[randomPosition];
+        totalCoinsList.RemoveAt(randomPosition);
+        return sentCoin;
+    }
+
+    public void ActivateAllCoins(){
+        int i;
+        bool canUseMagnet;
+        for(i=0;i<clonedTotalCoinsList.Count;i++){
+            coinHitBox = clonedTotalCoinsList[i].GetComponent<CoinHitBox>();
+            if(coinHitBox!=null){
+                canUseMagnet=coinHitBox.MagnetActivate();
+                if(canUseMagnet){
+                    clonedTotalCoinsList.RemoveAt(i);
+                }
+            }
+            else{
+                clonedTotalCoinsList.RemoveAt(i);
+            }
+        }
     }
 }

@@ -8,12 +8,14 @@ public class WallBreakDetectionScript : MonoBehaviour
 
     GameObject skyMineCounterCanvas;
     GameObject flagImage;
+    GameObject coinImage;
     GameObject mineCounterText;
     GameObject mineCounterCanvas=null;
 
     public Material wallFlagMaterial;
     public Material wallMaterial;
-
+    public bool itemFlag=false;
+    public bool itemCoin=false;
     private bool wallBreakFlag=false;
     private bool checkAllWallFlags=false;
     private bool flaggedWallFlag=false;
@@ -24,6 +26,7 @@ public class WallBreakDetectionScript : MonoBehaviour
 
         skyMineCounterCanvas=(transform.parent.gameObject).transform.Find("Sky MineCounter Canvas(Clone)").gameObject;
         flagImage=skyMineCounterCanvas.transform.Find("Flag Image").gameObject;
+        coinImage=skyMineCounterCanvas.transform.Find("Coin Image").gameObject;
         mineCounterText=skyMineCounterCanvas.transform.Find("Mine Counter Text (TMP)").gameObject;
     
         if(transform.parent.gameObject.transform.Find("Canvas(Clone)")){
@@ -37,48 +40,60 @@ public class WallBreakDetectionScript : MonoBehaviour
         }
     }
     void Update(){
-        flaggedWallFlag=false;
+        if(itemFlag==false){
+            flaggedWallFlag=false;
 
-        Debug.DrawRay(transform.position, transform.forward * 6,Color.red);
-        Debug.DrawRay(transform.position, transform.right * 6,Color.red);
-        Debug.DrawRay(transform.position, -transform.right * 6,Color.red);
-        Debug.DrawRay(transform.position, -transform.forward * 6,Color.red);
+            // Debug.DrawRay(transform.position, transform.forward * 6,Color.red);
+            // Debug.DrawRay(transform.position, transform.right * 6,Color.red);
+            // Debug.DrawRay(transform.position, -transform.right * 6,Color.red);
+            // Debug.DrawRay(transform.position, -transform.forward * 6,Color.red);
 
-        CheckWall(transform.forward,false);
-        CheckWall(transform.right,false);
-        CheckWall(-transform.right,false);
-        CheckWall(-transform.forward,false);
+            CheckWall(transform.forward,false);
+            CheckWall(transform.right,false);
+            CheckWall(-transform.right,false);
+            CheckWall(-transform.forward,false);
 
-        if(wallBreakFlag){
-            if(checkAllWallFlags){
-                if(!(transform.parent.gameObject).transform.Find("Mine")){
-                    SpawnMineOnWrongAnswer();
-                    SpawnMineOnWrongAnswer();
-                    SpawnMineOnWrongAnswer();
+            if(wallBreakFlag){
+                if(checkAllWallFlags){
+                    if(!(transform.parent.gameObject).transform.Find("Mine")){
+                        SpawnMineOnWrongAnswer();
+                        SpawnMineOnWrongAnswer();
+                        SpawnMineOnWrongAnswer();
+                    }
                 }
-            }
-            mineCounterText.SetActive(true);
-            if(mineCounterCanvas!=null){
-                mineCounterCanvas.SetActive(true);
+                mineCounterText.SetActive(true);
+                if(mineCounterCanvas!=null){
+                    mineCounterCanvas.SetActive(true);
+                }
+                else{
+                    CheckWall(transform.forward,true);
+                    CheckWall(transform.right,true);
+                    CheckWall(-transform.right,true);
+                    CheckWall(-transform.forward,true);
+                }
+                Destroy(transform.gameObject);
             }
             else{
-                CheckWall(transform.forward,true);
-                CheckWall(transform.right,true);
-                CheckWall(-transform.right,true);
-                CheckWall(-transform.forward,true);
-            }
-            Destroy(transform.gameObject);
-        }
-        else{
-            if(!flaggedWallFlag){
-                flagImage.SetActive(false);
-                checkAllWallFlags=false;
+                if(!flaggedWallFlag){
+                    flagImage.SetActive(false);
+                    checkAllWallFlags=false;
 
-                ChangeWallMaterial(transform.forward,false);
-                ChangeWallMaterial(transform.right,false);
-                ChangeWallMaterial(-transform.right,false);
-                ChangeWallMaterial(-transform.forward,false);
+                    ChangeWallMaterial(transform.forward,false);
+                    ChangeWallMaterial(transform.right,false);
+                    ChangeWallMaterial(-transform.right,false);
+                    ChangeWallMaterial(-transform.forward,false);
+                }
             }
+        }
+        else if(itemFlag){
+            flagImage.SetActive(true);
+            flaggedWallFlag=true;
+            checkAllWallFlags=true;
+
+            ChangeWallMaterial(transform.forward,true);
+            ChangeWallMaterial(transform.right,true);
+            ChangeWallMaterial(-transform.right,true);
+            ChangeWallMaterial(-transform.forward,true);
         }
     }
 
@@ -160,5 +175,9 @@ public class WallBreakDetectionScript : MonoBehaviour
                 hit.transform.name="Wall";
             }
         }
+    }
+
+    public void EnableCoinImage(){
+        coinImage.SetActive(true);
     }
 }

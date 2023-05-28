@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class WinningSceneScript : MonoBehaviour
 {
+    public AudioSource levelUnlockedSound;
 
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI timerText;
@@ -21,6 +22,8 @@ public class WinningSceneScript : MonoBehaviour
     private int playerScore;
     private float playerTimer;
 
+    private int coinAdder;
+
     private int currentPlayerScore=0;
     private int currentPlayerTimer=0;
     private bool starFlag;
@@ -32,6 +35,8 @@ public class WinningSceneScript : MonoBehaviour
         starFlag=true;
         playerScore=PlayerStatisticsScript.playerScore;
         playerTimer=TimerScript.timer;
+
+        coinAdder=playerScore/75;
 
         StartCoroutine(WaitForFunction());
 
@@ -56,22 +61,23 @@ public class WinningSceneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentPlayerScore+5<playerScore){
-            currentPlayerScore+=5;
+        if(currentPlayerScore+coinAdder<playerScore){
+            currentPlayerScore+=coinAdder;
             scoreText.text=currentPlayerScore.ToString();
         }
         else if(currentPlayerScore<playerScore){
             currentPlayerScore++;
             scoreText.text=currentPlayerScore.ToString();
         }
-        else if(currentPlayerTimer<playerTimer){
+        if(currentPlayerTimer<playerTimer){
             currentPlayerTimer++;
             float minutes = Mathf.FloorToInt(currentPlayerTimer / 60); 
             float seconds = Mathf.FloorToInt(currentPlayerTimer % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
-        else if(starFlag){
+        else if(starFlag && currentPlayerScore>=playerScore){
             starFlag=false;  
+            levelUnlockedSound.Play(0);
         }
     }
 

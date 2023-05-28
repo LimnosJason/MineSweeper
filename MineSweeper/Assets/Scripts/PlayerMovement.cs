@@ -19,11 +19,12 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded;
 
-
+    private int canRun=0;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        canRun=PlayerPrefs.GetInt("item 5");
     }
     void Awake() {
         QualitySettings. vSyncCount = 1;
@@ -32,6 +33,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(canRun==1){
+            if(Input.GetKey(KeyCode.LeftShift)){
+                movementSpeed=12f;
+            }
+            else{
+                movementSpeed=8f;
+            }
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         
         if(isGrounded && velocity.y<0){
