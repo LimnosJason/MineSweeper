@@ -96,7 +96,7 @@ Material:
     m_Colors:
     - _BlendColor1: {r: 0.14057496, g: 0.764151, b: 0.72766477, a: 0}
     - _BlendColor2: {r: 0.03702387, g: 0.26028898, b: 0.6037736, a: 0}
-    - _Color: {r: 0.98256755, g: 1.023281, b: 0.8330303, a: 1}
+    - _Color: {r: 1.0222504, g: 0.21382278, b: 0.8631513, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0.7028302, g: 0.965398, b: 1, a: 0}
     - _HighLight: {r: 1, g: 1, b: 1, a: 1}

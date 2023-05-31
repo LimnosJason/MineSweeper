@@ -20,7 +20,15 @@ public class WallBreakDetectionScript : MonoBehaviour
     private bool checkAllWallFlags=false;
     private bool flaggedWallFlag=false;
 
-    private int mineWallCounter=0;
+    GameObject wallForward;
+    GameObject wallRight;
+    GameObject wallLeft;
+    GameObject wallBackward;
+
+    WallScript wallScriptForward;
+    WallScript wallScriptRight;
+    WallScript wallScriptLeft;
+    WallScript wallScriptBackward;
     
     void Start(){
 
@@ -31,6 +39,15 @@ public class WallBreakDetectionScript : MonoBehaviour
     
         if(transform.parent.gameObject.transform.Find("Canvas(Clone)")){
             mineCounterCanvas=(transform.parent.gameObject).transform.Find("Canvas(Clone)").gameObject;
+            wallForward=CanvasWallCheck(transform.forward);
+            wallRight=CanvasWallCheck(transform.right);
+            wallLeft=CanvasWallCheck(-transform.right);
+            wallBackward=CanvasWallCheck(-transform.forward);
+            
+            wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
+            wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
+            wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
+            wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
         }
         else if(transform.parent.gameObject.transform.Find("Mine")){
             MineWallCheck(transform.forward);
@@ -71,6 +88,11 @@ public class WallBreakDetectionScript : MonoBehaviour
                     CheckWall(-transform.right,true);
                     CheckWall(-transform.forward,true);
                 }
+                RemoveExtraWalls(wallForward);
+                RemoveExtraWalls(wallRight);
+                RemoveExtraWalls(wallLeft);
+                RemoveExtraWalls(wallBackward);
+
                 Destroy(transform.gameObject);
             }
             else{
@@ -94,6 +116,15 @@ public class WallBreakDetectionScript : MonoBehaviour
             ChangeWallMaterial(transform.right,true);
             ChangeWallMaterial(-transform.right,true);
             ChangeWallMaterial(-transform.forward,true);
+        }
+    }
+
+    private void RemoveExtraWalls(GameObject wall){
+        if(wall!=null){
+            if(!wall.transform.name.Contains("Flagged") && !wall.transform.name.Contains("Mine") && !wall.transform.name.Contains("Border"))
+            wall.GetComponent<WallScript>().wallFlagList.Remove(true);
+            if(wall.GetComponent<WallScript>().wallFlagList.Count==0)
+                Destroy(wall);
         }
     }
 
@@ -142,13 +173,10 @@ public class WallBreakDetectionScript : MonoBehaviour
         }
     }
 
-    void CountMineWalls(Vector3 faceAt){
+    GameObject CanvasWallCheck(Vector3 faceAt){
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
-            if(hit.transform.name.Contains("Mine")){
-                mineWallCounter++;
-            }
-        }
+        Physics.Raycast(transform.position, faceAt, out hit, 6);
+        return hit.transform.gameObject;
     }
 
     void SpawnMineOnWrongAnswer(){

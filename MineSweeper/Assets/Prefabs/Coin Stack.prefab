@@ -480,7 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e3287d1b841c248a0799a0469a5450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinSound: {fileID: -4457318781686974729}
   target: {fileID: 0}
   coinStackPrefab: {fileID: 7570534759944381217}
   playerStatisticsScriptObject: {fileID: 805897480955477816, guid: ddc8758734b32ee43b6175b87c413f10,
@@ -494,7 +493,8 @@ AudioSource:
   m_GameObject: {fileID: 7570534759944381217}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1660808337600718820, guid: 016070519f67a8c4c9083cf2055376de,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c3c5f0f7fe3e92a459510d136e21f066, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.037
