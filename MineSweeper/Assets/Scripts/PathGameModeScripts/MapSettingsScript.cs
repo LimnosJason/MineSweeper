@@ -20,7 +20,6 @@ public class MapSettingsScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("dwa");
         int i;
         int totalStars=0;
         for(i=1;i<9;i++){

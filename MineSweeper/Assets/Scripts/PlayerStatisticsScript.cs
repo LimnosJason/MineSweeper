@@ -93,6 +93,7 @@ public class PlayerStatisticsScript : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2)){
             if(playerExtraRandomMineItem>0){
+                SetPlayerFlag(-1);
                 playerExtraRandomMineItem--;
                 playerExtraRandomMineItemText.text = playerExtraRandomMineItem.ToString();
                 PlayerPrefs.SetInt("item 3",PlayerPrefs.GetInt("item 3")-1);

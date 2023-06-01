@@ -45,13 +45,13 @@ public class WinningSceneScript : MonoBehaviour
         else
             PlayerPrefs.SetInt("coinCounter",playerScore);
 
-        if(currentPlayerTimer<=180 && currentPlayerTimer>120){
+        if(playerTimer<=180 && playerTimer>120){
             totalStars=1;
         }
-        else if(currentPlayerTimer<=120 && currentPlayerTimer>60){
+        else if(playerTimer<=120 && playerTimer>60){
             totalStars=2;
         }
-        else if(currentPlayerTimer<=60){
+        else if(playerTimer<=60){
             totalStars=3;
         }
         PlayerPrefs.SetInt("level"+PlayButtonScript.sandboxFlag,totalStars);
@@ -99,18 +99,18 @@ public class WinningSceneScript : MonoBehaviour
     IEnumerator WaitForFunction()
     {
         yield return new WaitForSeconds(0.1f);
-        if(currentPlayerTimer<=180 && currentPlayerTimer>120){
+        if(playerTimer<=180 && playerTimer>120){
             leftStar.SetActive(true);
             leftNonStar.SetActive(false);
         }
-        else if(currentPlayerTimer<=120 && currentPlayerTimer>60){
+        else if(playerTimer<=120 && playerTimer>60){
             leftStar.SetActive(true);
             leftNonStar.SetActive(false);
             yield return new WaitForSeconds(0.5f);
             rightStar.SetActive(true);
             rightNonStar.SetActive(false);
         }
-        else if(currentPlayerTimer<=60){
+        else if(playerTimer<=60){
             leftStar.SetActive(true);
             leftNonStar.SetActive(false);
             yield return new WaitForSeconds(0.5f);
