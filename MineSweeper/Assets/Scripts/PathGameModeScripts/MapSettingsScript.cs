@@ -22,7 +22,7 @@ public class MapSettingsScript : MonoBehaviour
     {
         int i;
         int totalStars=0;
-        for(i=1;i<9;i++){
+        for(i=1;i<10;i++){
             if (PlayerPrefs.HasKey("level"+i)){
                 totalStars=PlayerPrefs.GetInt("level"+i);
                 currentButton = GameObject.Find("Button "+i);
@@ -51,7 +51,8 @@ public class MapSettingsScript : MonoBehaviour
 
             }
             else{
-                break;
+                GameObject.Find("Button "+i).GetComponent<IsButtonLockedScript>().IsLevelOpen();
+                // break;
             }
         }
     }

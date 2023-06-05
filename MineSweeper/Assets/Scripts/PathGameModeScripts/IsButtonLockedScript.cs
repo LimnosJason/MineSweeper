@@ -6,7 +6,7 @@ public class IsButtonLockedScript : MonoBehaviour
 {
     GameObject lockImage;
     // Start is called before the first frame update
-    void Start()
+    public void IsLevelOpen()
     {
         lockImage=transform.Find("Lock").gameObject;
         if(lockImage.activeSelf){

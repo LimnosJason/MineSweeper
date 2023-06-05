@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.SceneManagement;
 
 public class WallBreakDetectionScript : MonoBehaviour
 {
@@ -29,6 +31,9 @@ public class WallBreakDetectionScript : MonoBehaviour
     WallScript wallScriptRight;
     WallScript wallScriptLeft;
     WallScript wallScriptBackward;
+
+    private bool exceptionFlag=false;
+
     
     void Start(){
 
@@ -38,16 +43,25 @@ public class WallBreakDetectionScript : MonoBehaviour
         mineCounterText=skyMineCounterCanvas.transform.Find("Mine Counter Text (TMP)").gameObject;
     
         if(transform.parent.gameObject.transform.Find("Canvas(Clone)")){
-            mineCounterCanvas=(transform.parent.gameObject).transform.Find("Canvas(Clone)").gameObject;
-            wallForward=CanvasWallCheck(transform.forward);
-            wallRight=CanvasWallCheck(transform.right);
-            wallLeft=CanvasWallCheck(-transform.right);
-            wallBackward=CanvasWallCheck(-transform.forward);
+            // try {
+        
+                mineCounterCanvas=(transform.parent.gameObject).transform.Find("Canvas(Clone)").gameObject;
+                wallForward=CanvasWallCheck(transform.forward);
+                wallRight=CanvasWallCheck(transform.right);
+                wallLeft=CanvasWallCheck(-transform.right);
+                wallBackward=CanvasWallCheck(-transform.forward);
+
             
-            wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
-            wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
-            wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
-            wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
+                // if(!exceptionFlag){
+                    wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
+                    wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
+                    wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
+                    wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
+                // }
+            // }
+            // catch (Exception e) {
+                
+            // } 
         }
         else if(transform.parent.gameObject.transform.Find("Mine")){
             MineWallCheck(transform.forward);
@@ -88,12 +102,15 @@ public class WallBreakDetectionScript : MonoBehaviour
                     CheckWall(-transform.right,true);
                     CheckWall(-transform.forward,true);
                 }
-                RemoveExtraWalls(wallForward);
-                RemoveExtraWalls(wallRight);
-                RemoveExtraWalls(wallLeft);
-                RemoveExtraWalls(wallBackward);
-
-                Destroy(transform.gameObject);
+                if(!exceptionFlag){
+                    RemoveExtraWalls(wallForward);
+                    RemoveExtraWalls(wallRight);
+                    RemoveExtraWalls(wallLeft);
+                    RemoveExtraWalls(wallBackward);
+                
+                    // Destroy(transform.gameObject);
+                    gameObject.SetActive(false);
+                }
             }
             else{
                 if(!flaggedWallFlag){
@@ -175,8 +192,14 @@ public class WallBreakDetectionScript : MonoBehaviour
 
     GameObject CanvasWallCheck(Vector3 faceAt){
         RaycastHit hit;
-        Physics.Raycast(transform.position, faceAt, out hit, 6);
-        return hit.transform.gameObject;
+        // if(Physics.Raycast(transform.position, faceAt, out hit, 6)){
+            Physics.Raycast(transform.position, faceAt, out hit, 6);
+            return hit.transform.gameObject;
+        // }
+        // else{
+        //     exceptionFlag=true;
+        //     return null;
+        // }
     }
 
     void SpawnMineOnWrongAnswer(){

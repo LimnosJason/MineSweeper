@@ -16,6 +16,11 @@ public class MapCreation : MonoBehaviour
 
     private int mapRow,mapCol;
 
+    private bool isDone1=false;
+    private bool isDone2=false;
+
+    public List<GameObject> mapsList = new List<GameObject>();
+
     void Awake(){
         placeItems = placeItemsObject.GetComponent<PlaceItems>();
     }
@@ -24,8 +29,9 @@ public class MapCreation : MonoBehaviour
     {
         mapRow=(int)PlayButtonScript.levelSize;
         mapCol=(int)PlayButtonScript.levelSize;
-        PlaceRoomsMethod();
-        placeItems.StartSpawningItems(mapRow, mapCol);
+        // PlaceRoomsMethod();
+        //  if(isDone1&&isDone2)
+            placeItems.StartSpawningItems(mapRow, mapCol);
     }
 
     void Update()
@@ -78,9 +84,11 @@ public class MapCreation : MonoBehaviour
                 SetBorders(i,j,instantiatedObject);
             }
         }
+        isDone1=true;
     }
 
     void SetBorders(int row,int col,GameObject selectedRoom){
+        isDone2=false;
         if(row==0){
             selectedRoom.transform.Find("Walls").transform.Find("Wall 1").name="Border";
         }
@@ -99,5 +107,6 @@ public class MapCreation : MonoBehaviour
         else if(col==mapCol-1){
             selectedRoom.transform.Find("Walls").transform.Find("Wall 3").name="Border";
         }
+        isDone2=true;
     }
 }

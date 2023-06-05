@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerStatisticsScript : MonoBehaviour
@@ -70,6 +71,10 @@ public class PlayerStatisticsScript : MonoBehaviour
     }
 
     public void Update(){
+        if(Input.GetKeyDown(KeyCode.R)){
+            Time.timeScale = 1;
+            SceneManager.LoadScene("GameScene");
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)){
             if(playerExtraRandomCoinItem>0){

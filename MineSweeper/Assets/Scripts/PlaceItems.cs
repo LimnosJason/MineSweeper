@@ -53,6 +53,7 @@ public class PlaceItems : MonoBehaviour
         SpawnCoinRandomly();
         PlaceWallBreakDetection();
         CountMines();
+        PrintArray();
     }
 
     void SpawnPlayerRandomly(){ 
@@ -67,9 +68,12 @@ public class PlaceItems : MonoBehaviour
 
         savedPosition = selectedRoom.transform.Find("Podium").position;
 
-        GameObject instantiatedObject=Instantiate(playerPrefab);
-        instantiatedObject.name = "Player";
-        instantiatedObject.transform.position = savedPosition;
+        // GameObject instantiatedObject=Instantiate(playerPrefab);
+        // instantiatedObject.name = "Player";
+        // instantiatedObject.transform.position = savedPosition;
+        // instantiatedObject.transform.Find("Body").position= savedPosition;
+
+        // playerPrefab.transform.position=savedPosition;
 
         mapArray[randomRow-1,randomCol-1]=2;
     }
@@ -78,11 +82,14 @@ public class PlaceItems : MonoBehaviour
         int i,randomCol,randomRow;   
         // print("MAP ROW"+mapRow);
         for(i=0;i<mineNumber;i++){
-            
-            randomRow = Random.Range(1, mapRow+1);
-            randomCol = Random.Range(1, mapCol+1);
+            do{
+                randomRow = Random.Range(1, mapRow+1);
+                randomCol = Random.Range(1, mapCol+1);
+            }while(randomRow==0||randomCol==5); 
             // print("RANDOM ROW"+randomRow);
             if(mapArray[randomRow-1,randomCol-1]==0){
+                Debug.Log(randomRow);
+                Debug.Log(randomCol);
                 FindSelectedRoom(randomRow,randomCol);
                 
                 savedPosition = selectedRoom.transform.Find("Podium").position;
@@ -105,9 +112,11 @@ public class PlaceItems : MonoBehaviour
 
     void SpawnCoinRandomly(){
         int i,randomCol,randomRow;   
-        for(i=0;i<coinNumber;i++){   
-            randomRow = Random.Range(1, mapRow+1);
-            randomCol = Random.Range(1, mapCol+1);
+        for(i=0;i<coinNumber;i++){  
+             do{
+                randomRow = Random.Range(1, mapRow+1);
+                randomCol = Random.Range(1, mapCol+1);
+            }while(randomRow==0||randomCol==5); 
             if(mapArray[randomRow-1,randomCol-1]==0){
                 FindSelectedRoom(randomRow,randomCol);
                 
