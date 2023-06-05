@@ -6,7 +6,7 @@ using TMPro;
 public class BuyShopItemScript : MonoBehaviour
 {
     public Material hatColor;
-
+    public AudioSource itemSound;
     private int playerCoins;
 
     ShowTotalCoins showTotalCoins;
@@ -26,6 +26,7 @@ public class BuyShopItemScript : MonoBehaviour
             Debug.Log("Not Enough Coins");
         }
         else{
+            itemSound.Play(0);
             playerCoins-=itemCost;
             PlayerPrefs.SetInt("coinCounter",PlayerPrefs.GetInt("coinCounter")-itemCost);
             showTotalCoins.UpdateTotalCoins();

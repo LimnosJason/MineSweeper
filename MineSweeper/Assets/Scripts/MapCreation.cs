@@ -29,6 +29,7 @@ public class MapCreation : MonoBehaviour
     {
         mapRow=(int)PlayButtonScript.levelSize;
         mapCol=(int)PlayButtonScript.levelSize;
+        mapsList[mapRow-5].SetActive(true);
         // PlaceRoomsMethod();
         //  if(isDone1&&isDone2)
             placeItems.StartSpawningItems(mapRow, mapCol);

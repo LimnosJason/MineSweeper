@@ -108,7 +108,7 @@ public class MapSettingsScript : MonoBehaviour
         }
         else if(mapNumber==9){
             PlayButtonScript.sandboxFlag=9;
-            PlayButtonScript.levelSize=25;
+            PlayButtonScript.levelSize=20;
             PlayButtonScript.levelDifficulty=25f;
         }
 

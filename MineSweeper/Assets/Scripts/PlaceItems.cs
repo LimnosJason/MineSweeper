@@ -53,7 +53,7 @@ public class PlaceItems : MonoBehaviour
         SpawnCoinRandomly();
         PlaceWallBreakDetection();
         CountMines();
-        PrintArray();
+        // PrintArray();
     }
 
     void SpawnPlayerRandomly(){ 
@@ -61,12 +61,15 @@ public class PlaceItems : MonoBehaviour
 
         randomRow = Random.Range(1, mapRow+1);
         randomCol = Random.Range(1, mapCol+1);
-        
-        Debug.Log(randomRow);
-        Debug.Log(randomCol);
-        FindSelectedRoom(randomRow,randomCol);
 
-        savedPosition = selectedRoom.transform.Find("Podium").position;
+        randomRow=1;
+        randomCol=5;
+        
+        // Debug.Log(randomRow);
+        // Debug.Log(randomCol);
+        // FindSelectedRoom(randomRow,randomCol);
+
+        // savedPosition = selectedRoom.transform.Find("Podium").position;
 
         // GameObject instantiatedObject=Instantiate(playerPrefab);
         // instantiatedObject.name = "Player";
@@ -85,7 +88,7 @@ public class PlaceItems : MonoBehaviour
             do{
                 randomRow = Random.Range(1, mapRow+1);
                 randomCol = Random.Range(1, mapCol+1);
-            }while(randomRow==0||randomCol==5); 
+            }while(randomRow<3&&randomCol>mapCol-2); 
             // print("RANDOM ROW"+randomRow);
             if(mapArray[randomRow-1,randomCol-1]==0){
                 Debug.Log(randomRow);
@@ -116,7 +119,7 @@ public class PlaceItems : MonoBehaviour
              do{
                 randomRow = Random.Range(1, mapRow+1);
                 randomCol = Random.Range(1, mapCol+1);
-            }while(randomRow==0||randomCol==5); 
+            }while(randomRow<3&&randomCol>mapCol-2); 
             if(mapArray[randomRow-1,randomCol-1]==0){
                 FindSelectedRoom(randomRow,randomCol);
                 

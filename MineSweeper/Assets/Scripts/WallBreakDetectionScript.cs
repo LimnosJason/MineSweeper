@@ -52,12 +52,12 @@ public class WallBreakDetectionScript : MonoBehaviour
                 wallBackward=CanvasWallCheck(-transform.forward);
 
             
-                // if(!exceptionFlag){
+                if(!exceptionFlag){
                     wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
                     wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
                     wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
                     wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
-                // }
+                }
             // }
             // catch (Exception e) {
                 
@@ -192,14 +192,14 @@ public class WallBreakDetectionScript : MonoBehaviour
 
     GameObject CanvasWallCheck(Vector3 faceAt){
         RaycastHit hit;
-        // if(Physics.Raycast(transform.position, faceAt, out hit, 6)){
+        if(Physics.Raycast(transform.position, faceAt, out hit, 6)){
             Physics.Raycast(transform.position, faceAt, out hit, 6);
             return hit.transform.gameObject;
-        // }
-        // else{
-        //     exceptionFlag=true;
-        //     return null;
-        // }
+        }
+        else{
+            exceptionFlag=true;
+            return null;
+        }
     }
 
     void SpawnMineOnWrongAnswer(){

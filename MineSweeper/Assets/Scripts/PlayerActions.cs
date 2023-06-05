@@ -6,6 +6,7 @@ public class PlayerActions : MonoBehaviour
 {
     public Camera mainCamera ;
     public Material wallMaterial;
+    public AudioSource flagWallSound;
     RaycastHit hit;
     Ray ray;
 
@@ -36,6 +37,7 @@ public class PlayerActions : MonoBehaviour
                 }
                 else if(hit.transform.name.Contains("Wall")){
                     if(playerStatisticsScript.GetPlayerFlag()>0){
+                        flagWallSound.Play(0);
                         hit.transform.name="Flagged Wall";
                         playerStatisticsScript.SetPlayerFlag(-1);  
                     }

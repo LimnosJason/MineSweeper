@@ -52,7 +52,7 @@ public class SettingsScript : MonoBehaviour
             SceneManager.LoadScene("MenuScene");
         }
         else{
-            SceneManager.LoadScene("ChooseGame");
+            SceneManager.LoadScene("PathLevel");
         }
     }
     
