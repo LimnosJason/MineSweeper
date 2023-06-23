@@ -5,17 +5,17 @@ using UnityEngine;
 public class ChooseGameSettingsScript : MonoBehaviour
 {
     public GameObject SettingsCanvas;
-    private bool visibleCanvas=false;
-
     void Awake(){
         SettingsCanvas.SetActive(false);
     }
 
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            ActivateSettingsCanvas();
+        }
+    }
+
     public void ActivateSettingsCanvas(){
-        if(visibleCanvas)
-            visibleCanvas=false;
-        else
-            visibleCanvas=true;
-        SettingsCanvas.SetActive(visibleCanvas);
+        SettingsCanvas.SetActive(!SettingsCanvas.activeSelf);
     }
 }

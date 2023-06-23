@@ -6,9 +6,11 @@ public class QuitGameScript : MonoBehaviour
 {
     public GameObject quitCanvas;
     public GameObject settingsCanvas;
+    
     void Start(){
         quitCanvas.SetActive(false);
     }
+
     
     public void QuitGame(){
         Application.Quit();

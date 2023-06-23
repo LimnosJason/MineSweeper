@@ -36,7 +36,7 @@ public class CoinHitBox : MonoBehaviour
     }
 
     public bool MagnetActivate(){
-        if(wallBreakDetectionGameObject==null){
+        if(!wallBreakDetectionGameObject.activeSelf){
             magnetActivated=true;
             return true;
         }

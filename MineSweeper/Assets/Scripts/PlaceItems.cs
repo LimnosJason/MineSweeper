@@ -249,6 +249,10 @@ public class PlaceItems : MonoBehaviour
         return totalMinesList[randomPosition];
     }
 
+    public int GetNumberOfMines(){
+        return totalMinesList.Count;
+    }
+
     public GameObject GetRandomCoin(){
         int randomPosition;
         bool repeat;
@@ -263,6 +267,9 @@ public class PlaceItems : MonoBehaviour
                 if(totalCoinsList[randomPosition]==null){
                     totalCoinsList.RemoveAt(randomPosition);
                     repeat=true;
+                }
+                if(totalCoinsList.Count==0){
+                    return null;
                 }
             }while(repeat);
             if(totalCoinsList[randomPosition].transform.parent.gameObject.transform.Find("WallBreakDetection")==null){

@@ -64,10 +64,11 @@ public class MineScript : MonoBehaviour
             if(deadTextureGameObject.activeSelf){
                 playerStatisticsScript.CallPlayerWin(1);
             }
+            movementSpeed=15;
             normalTextureGameObject.SetActive(true);
             deadTextureGameObject.SetActive(false);
             if((parent.transform.childCount != childCount || RaycastCheck() || walkingFlag) && !explodeFlag){
-                movementSpeed=15;
+                
                 ChangeAnimationState("walk");
                 walkingFlag=true;
                 Walking();

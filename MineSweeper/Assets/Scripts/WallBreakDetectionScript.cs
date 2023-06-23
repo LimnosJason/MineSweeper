@@ -52,12 +52,21 @@ public class WallBreakDetectionScript : MonoBehaviour
                 wallBackward=CanvasWallCheck(-transform.forward);
 
             
-                if(!exceptionFlag){
-                    wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
-                    wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
-                    wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
-                    wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
-                }
+                // if(!exceptionFlag){
+                AddToList(wallForward);
+                AddToList(wallRight);
+                AddToList(wallLeft);
+                AddToList(wallBackward);
+
+                    // wallForward.GetComponent<WallScript>().wallFlagList.Add(true);
+                    // wallRight.GetComponent<WallScript>().wallFlagList.Add(true);
+                    // wallLeft.GetComponent<WallScript>().wallFlagList.Add(true);
+                    // wallBackward.GetComponent<WallScript>().wallFlagList.Add(true);
+                // }
+                // else{
+                //     Debug.Log("Exception");
+                    // gameObject.SetActive(false);
+                // }
             // }
             // catch (Exception e) {
                 
@@ -70,6 +79,13 @@ public class WallBreakDetectionScript : MonoBehaviour
             MineWallCheck(-transform.forward);
         }
     }
+
+    void AddToList(GameObject wallGameObject){
+        if(wallGameObject!=null){
+            wallGameObject.GetComponent<WallScript>().wallFlagList.Add(true);
+        }
+    }
+
     void Update(){
         if(itemFlag==false){
             flaggedWallFlag=false;
@@ -112,17 +128,17 @@ public class WallBreakDetectionScript : MonoBehaviour
                     gameObject.SetActive(false);
                 }
             }
-            else{
-                if(!flaggedWallFlag){
-                    flagImage.SetActive(false);
-                    checkAllWallFlags=false;
+            // else{
+            //     if(!flaggedWallFlag){
+            //         flagImage.SetActive(false);
+            //         checkAllWallFlags=false;
 
-                    ChangeWallMaterial(transform.forward,false);
-                    ChangeWallMaterial(transform.right,false);
-                    ChangeWallMaterial(-transform.right,false);
-                    ChangeWallMaterial(-transform.forward,false);
-                }
-            }
+            //         ChangeWallMaterial(transform.forward,false);
+            //         ChangeWallMaterial(transform.right,false);
+            //         ChangeWallMaterial(-transform.right,false);
+            //         ChangeWallMaterial(-transform.forward,false);
+            //     }
+            // }
         }
         else if(itemFlag){
             flagImage.SetActive(true);
@@ -138,10 +154,11 @@ public class WallBreakDetectionScript : MonoBehaviour
 
     private void RemoveExtraWalls(GameObject wall){
         if(wall!=null){
-            if(!wall.transform.name.Contains("Flagged") && !wall.transform.name.Contains("Mine") && !wall.transform.name.Contains("Border"))
-            wall.GetComponent<WallScript>().wallFlagList.Remove(true);
-            if(wall.GetComponent<WallScript>().wallFlagList.Count==0)
-                Destroy(wall);
+            if(!wall.transform.name.Contains("Flagged") && !wall.transform.name.Contains("Mine") && !wall.transform.name.Contains("Border")&& !wall.transform.name.Contains("HiddenF")){
+                wall.GetComponent<WallScript>().wallFlagList.Remove(true);
+                if(wall.GetComponent<WallScript>().wallFlagList.Count==0)
+                    Destroy(wall);
+            }
         }
     }
 
@@ -150,7 +167,10 @@ public class WallBreakDetectionScript : MonoBehaviour
         // Debug.Log(mineWallCounter);
         if(breakWall){
             if (Physics.Raycast(transform.position, faceAt, out hit, 6)) { 
-                if(!hit.transform.name.Contains("Flagged") && !hit.transform.name.Contains("Mine") && !hit.transform.name.Contains("Border")){
+                if(hit.transform.name.Contains("HiddenF")){
+                    hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallMaterial;
+                }
+                if(!hit.transform.name.Contains("Flagged") && !hit.transform.name.Contains("Mine") && !hit.transform.name.Contains("Border")&& !hit.transform.name.Contains("HiddenF")){
                     Destroy(hit.transform.gameObject); 
                 }
             }
@@ -172,6 +192,7 @@ public class WallBreakDetectionScript : MonoBehaviour
             else if (hit.transform.name.Contains("RemoveF")){
                 flagImage.SetActive(false);
                 flaggedWallFlag=false;
+                checkAllWallFlags=false;
 
                 ChangeWallMaterial(transform.forward,false);
                 ChangeWallMaterial(transform.right,false);
@@ -185,6 +206,7 @@ public class WallBreakDetectionScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {   
             if(hit.transform.name.Contains("Wall")){
+                hit.transform.gameObject.GetComponent<WallScript>().startName="Mine Wall";
                 hit.transform.name="Mine Wall";
             }
         }
@@ -197,7 +219,7 @@ public class WallBreakDetectionScript : MonoBehaviour
             return hit.transform.gameObject;
         }
         else{
-            exceptionFlag=true;
+            // exceptionFlag=true;
             return null;
         }
     }
@@ -213,17 +235,29 @@ public class WallBreakDetectionScript : MonoBehaviour
         RaycastHit hit;
         if(flagCheck){
             if (Physics.Raycast(transform.position, faceAt, out hit, 6)) {
-                hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallFlagMaterial;
-                // if(!hit.transform.name.Contains("Flagged")&&!hit.transform.name.Contains("RemoveF")&&!hit.transform.name.Contains("Border")){
-                if(hit.transform.name=="Wall"){
-                    hit.transform.name="Wall HiddenF";
+                // if(hit.transform.gameObject.GetComponent<MeshRenderer>())
+                if(!hit.transform.name.Contains("Flagged")&&!hit.transform.name.Contains("RemoveF")&&!hit.transform.name.Contains("Border")){
+                    if(hit.transform.name=="Wall"||hit.transform.name=="Mine Wall"){
+                        
+                        hit.transform.name="Wall HiddenF";
+                    }
+                }
+                if(hit.transform.name.Contains("Flagged")||hit.transform.name.Contains("HiddenF")){
+                    hit.transform.gameObject.GetComponent<MeshRenderer>().material = wallFlagMaterial;
                 }
             }
         }
         else{
             if (Physics.Raycast(transform.position, faceAt, out hit, 6)&&!hit.transform.name.Contains("Border")&&!hit.transform.name.Contains("Mine")) {
                 hit.transform.gameObject.GetComponent<MeshRenderer> ().material = wallMaterial;
-                hit.transform.name="Wall";
+                hit.transform.name=hit.transform.gameObject.GetComponent<WallScript>().startName;
+                // if(transform.parent.gameObject.transform.Find("Mine")){
+                //     hit.transform.name="Mine Wall";
+                // }
+                // else{
+                //     hit.transform.name="Wall";
+                // }
+                
             }
         }
     }
