@@ -12,8 +12,10 @@ public class PlayButtonScript : MonoBehaviour
 
     public static float levelSize;
     public static float levelDifficulty;
+    public static int sandboxFlag;
 
     public void StartGameMethod(){
+        sandboxFlag=0;
         levelSize=levelSizeSlider.value;
         levelDifficulty=DifficultySliderScript.difficultyPercentage;
 

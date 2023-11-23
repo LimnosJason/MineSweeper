@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MineHitBox : MonoBehaviour
 {
-
+    private bool hitFlag=false;
     MineScript mineScript;
     [SerializeField] GameObject mineScriptObject;
 
@@ -14,10 +14,14 @@ public class MineHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
-        if(other.name.Contains("Cube"))
-            Destroy(other.gameObject);
-        else if(other.name.Contains("Body")) 
-            mineScript.Explode(other);
+        if(hitFlag==false){
+            if(other.name.Contains("Wall")){
+                Destroy(other.gameObject);
+            }
+            else if(other.name.Contains("Dyp")) {
+                hitFlag=true;
+                mineScript.Explode(other);
+            }
+        }    
     }
 }

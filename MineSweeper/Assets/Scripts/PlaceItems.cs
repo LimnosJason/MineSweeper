@@ -6,27 +6,37 @@ public class PlaceItems : MonoBehaviour
 {
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject mineCounterPrefab;
+    [SerializeField] GameObject skyMineCounterPrefab;
 
     GameObject selectedRoom=null;
     
     ChangeTextScript changeTextScript;
     [SerializeField] GameObject changeTextScriptObject;
     [SerializeField] GameObject minePrefab;
+    [SerializeField] GameObject wallBreakDetectionPrefab;
+    [SerializeField] GameObject coinPrefab;
 
+    PlayerStatisticsScript playerStatisticsScript;
+    [SerializeField] GameObject playerStatisticsScriptObject;
+
+    MineScript mineScript;
+
+    CoinHitBox coinHitBox;
+    
     private Vector3 savedPosition;
     private int mineNumber;
+    private int coinNumber;
     private int mapRow,mapCol;
     private int[,] mapArray;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private static List<GameObject> totalMinesList = new List<GameObject>();
+    private static List<GameObject> totalCoinsList = new List<GameObject>();
+    private static List<GameObject> clonedTotalCoinsList;
+    
+    void Awake(){
+        totalMinesList.Clear();
+        totalCoinsList.Clear();
+        playerStatisticsScript = playerStatisticsScriptObject.GetComponent<PlayerStatisticsScript>();
     }
 
     public void StartSpawningItems(int row, int col){
@@ -34,10 +44,16 @@ public class PlaceItems : MonoBehaviour
         mapCol=col;
         mapArray = new int[mapRow,mapCol];
         mineNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
-        print(mineNumber);
+        coinNumber=(mapRow*mapCol)*(int)PlayButtonScript.levelDifficulty/100;
+        playerStatisticsScript.StartPlayFlag(mineNumber);
+
+
         SpawnPlayerRandomly();
         SpawnMineRandomly();
+        SpawnCoinRandomly();
+        PlaceWallBreakDetection();
         CountMines();
+        // PrintArray();
     }
 
     void SpawnPlayerRandomly(){ 
@@ -45,14 +61,22 @@ public class PlaceItems : MonoBehaviour
 
         randomRow = Random.Range(1, mapRow+1);
         randomCol = Random.Range(1, mapCol+1);
+
+        randomRow=1;
+        randomCol=5;
         
-        FindSelectedRoom(randomRow,randomCol);
+        // Debug.Log(randomRow);
+        // Debug.Log(randomCol);
+        // FindSelectedRoom(randomRow,randomCol);
 
-        savedPosition = selectedRoom.transform.Find("Podium").position;
+        // savedPosition = selectedRoom.transform.Find("Podium").position;
 
-        GameObject instantiatedObject=Instantiate(playerPrefab);
-        instantiatedObject.name = "Player";
-        instantiatedObject.transform.position = savedPosition;
+        // GameObject instantiatedObject=Instantiate(playerPrefab);
+        // instantiatedObject.name = "Player";
+        // instantiatedObject.transform.position = savedPosition;
+        // instantiatedObject.transform.Find("Body").position= savedPosition;
+
+        // playerPrefab.transform.position=savedPosition;
 
         mapArray[randomRow-1,randomCol-1]=2;
     }
@@ -61,20 +85,25 @@ public class PlaceItems : MonoBehaviour
         int i,randomCol,randomRow;   
         // print("MAP ROW"+mapRow);
         for(i=0;i<mineNumber;i++){
-            
-            randomRow = Random.Range(1, mapRow+1);
-            randomCol = Random.Range(1, mapCol+1);
+            do{
+                randomRow = Random.Range(1, mapRow+1);
+                randomCol = Random.Range(1, mapCol+1);
+            }while(randomRow<3&&randomCol>mapCol-2); 
             // print("RANDOM ROW"+randomRow);
             if(mapArray[randomRow-1,randomCol-1]==0){
+                Debug.Log(randomRow);
+                Debug.Log(randomCol);
                 FindSelectedRoom(randomRow,randomCol);
                 
                 savedPosition = selectedRoom.transform.Find("Podium").position;
 
                 GameObject instantiatedObject=Instantiate(minePrefab);
-                instantiatedObject.name = "Mine " + (i+1).ToString();
+                instantiatedObject.name = "Mine";
                 instantiatedObject.transform.SetParent(selectedRoom.transform);
                 instantiatedObject.transform.position = savedPosition;
 
+                totalMinesList.Add(instantiatedObject);
+                
                 mapArray[randomRow-1,randomCol-1]=1;
             }
             else{
@@ -82,6 +111,35 @@ public class PlaceItems : MonoBehaviour
                 continue;
             }
         }
+    }
+
+    void SpawnCoinRandomly(){
+        int i,randomCol,randomRow;   
+        for(i=0;i<coinNumber;i++){  
+             do{
+                randomRow = Random.Range(1, mapRow+1);
+                randomCol = Random.Range(1, mapCol+1);
+            }while(randomRow<3&&randomCol>mapCol-2); 
+            if(mapArray[randomRow-1,randomCol-1]==0){
+                FindSelectedRoom(randomRow,randomCol);
+                
+                savedPosition = selectedRoom.transform.Find("Podium").position;
+
+                GameObject instantiatedObject=Instantiate(coinPrefab);
+                instantiatedObject.name = "Coin";
+                instantiatedObject.transform.SetParent(selectedRoom.transform);
+                instantiatedObject.transform.position = savedPosition;
+
+                totalCoinsList.Add(instantiatedObject);
+
+                mapArray[randomRow-1,randomCol-1]=3;
+            }
+            else{
+                i--;
+                continue;
+            }
+        }
+        clonedTotalCoinsList = new List<GameObject>(totalCoinsList);
     }
 
     GameObject FindSelectedRoom(int row,int col){
@@ -99,10 +157,13 @@ public class PlaceItems : MonoBehaviour
 
     void PrintArray(){
         int i,j;
+        string str;
         for(i=0;i<mapRow;i++){
+            str = "";
             for(j=0;j<mapCol;j++){
-                Debug.Log(mapArray[i,j]);
+                str+=mapArray[i,j]+" ";
             }
+            Debug.Log(str);
         }
     }
 
@@ -110,13 +171,14 @@ public class PlaceItems : MonoBehaviour
         int i,j,k,l,count;
         for(i=0;i<mapRow;i++){
             for(j=0;j<mapCol;j++){
+                count=0;
                 if(mapArray[i,j]==1){
+                    ChangeMineCountText(count,i+1,j+1);
                     continue;
                 }
-                count=0;
                 for(k=-1;k<=1;k++){
                     for(l=-1;l<=1;l++){
-                        if(i+k<5 && i+k>=0 && j+l<5 && j+l>=0 && (k!=0 || l!=0)){
+                        if(i+k<mapRow && i+k>=0 && j+l<mapCol && j+l>=0 && (k!=0 || l!=0)){
                             if(mapArray[i+k,j+l]==1){
                                 count++;
                             }
@@ -134,12 +196,106 @@ public class PlaceItems : MonoBehaviour
         savedPosition = selectedRoom.transform.Find("Podium").position;
         savedPosition.y = 4f;
 
-        GameObject mineCounterText=Instantiate(mineCounterPrefab);
-        mineCounterText.transform.SetParent(selectedRoom.transform);
-        mineCounterText.transform.position = savedPosition;
+        GameObject skyMineCounterText=Instantiate(skyMineCounterPrefab);
+        skyMineCounterText.transform.SetParent(selectedRoom.transform);
+        skyMineCounterText.transform.position = savedPosition;
 
-        changeTextScriptObject=mineCounterText;
-        changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
-        changeTextScript.ChangeMineCounterText(count);
+        if(count>0){
+            GameObject mineCounterText=Instantiate(mineCounterPrefab);
+            mineCounterText.transform.SetParent(selectedRoom.transform);
+            mineCounterText.transform.position = savedPosition;
+
+            changeTextScriptObject=mineCounterText;
+            changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
+            changeTextScript.ChangeMineCounterText(count);
+
+            changeTextScriptObject=skyMineCounterText;
+            changeTextScript = changeTextScriptObject.GetComponent<ChangeTextScript>();
+            changeTextScript.ChangeMineCounterText(count);
+        }
+        if(mapArray[row-1,col-1]==2)
+            skyMineCounterText.transform.Find("Mine Counter Text (TMP)").gameObject.SetActive(true);;
+
+        
+    }
+
+    void PlaceWallBreakDetection(){
+        int row,col;
+        GameObject selectedRoom;
+        GameObject instantiatedObject;
+        for(row=0;row<mapRow;row++){
+            for(col=0;col<mapCol;col++){
+                if(mapArray[row,col]!=2){
+                    selectedRoom = FindSelectedRoom(row+1,col+1);
+                    
+                    savedPosition = selectedRoom.transform.Find("Podium").position;
+                    savedPosition.y=3f;
+
+                    instantiatedObject = Instantiate(wallBreakDetectionPrefab);
+                    instantiatedObject.name = "WallBreakDetection";
+                    instantiatedObject.transform.SetParent(selectedRoom.transform);
+                    instantiatedObject.transform.position = savedPosition;
+                }
+            }
+        }    
+    }
+
+    public GameObject GetRandomMine(){
+        int randomPosition;
+        do{
+            randomPosition = Random.Range(0, totalMinesList.Count);
+            mineScript = totalMinesList[randomPosition].GetComponent<MineScript>();
+        }while(mineScript.movementSpeed!=15);
+        return totalMinesList[randomPosition];
+    }
+
+    public int GetNumberOfMines(){
+        return totalMinesList.Count;
+    }
+
+    public GameObject GetRandomCoin(){
+        int randomPosition;
+        bool repeat;
+        GameObject sentCoin;
+        do{
+            if(totalCoinsList.Count==0){
+                return null;
+            }
+            do{
+                repeat=false;
+                randomPosition = Random.Range(0, totalCoinsList.Count);
+                if(totalCoinsList[randomPosition]==null){
+                    totalCoinsList.RemoveAt(randomPosition);
+                    repeat=true;
+                }
+                if(totalCoinsList.Count==0){
+                    return null;
+                }
+            }while(repeat);
+            if(totalCoinsList[randomPosition].transform.parent.gameObject.transform.Find("WallBreakDetection")==null){
+                totalCoinsList.RemoveAt(randomPosition);
+                repeat=true;
+            }
+        }while(repeat);
+        sentCoin=totalCoinsList[randomPosition];
+        totalCoinsList.RemoveAt(randomPosition);
+        return sentCoin;
+    }
+
+    public void ActivateAllCoins(){
+        int i;
+        bool canUseMagnet;
+        for(i=0;i<clonedTotalCoinsList.Count;i++){
+            coinHitBox = clonedTotalCoinsList[i].GetComponent<CoinHitBox>();
+            if(coinHitBox!=null){
+                canUseMagnet=coinHitBox.MagnetActivate();
+                if(canUseMagnet){
+                    clonedTotalCoinsList.RemoveAt(i);
+                }
+            }
+            else{
+                clonedTotalCoinsList.RemoveAt(i);
+            }
+        }
     }
 }

@@ -15,13 +15,16 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = .1f;
     public LayerMask groundMask;
 
+    static bool stopMovement=false;
+
     bool isGrounded;
 
-
+    private int canRun=0;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        canRun=PlayerPrefs.GetInt("item 5");
     }
     void Awake() {
         QualitySettings. vSyncCount = 1;
@@ -30,18 +33,34 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(canRun==1){
+            if(Input.GetKey(KeyCode.LeftShift)){
+                movementSpeed=12f;
+            }
+            else{
+                movementSpeed=8f;
+            }
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         
         if(isGrounded && velocity.y<0){
             velocity.y = -2f;
         }
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        
-        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput ;
-        controller.Move(move*movementSpeed*Time.deltaTime);
-        
+        if(!stopMovement){
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            
+            Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput ;
+            controller.Move(move*movementSpeed*Time.deltaTime);
+        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void StopMovement(){
+        stopMovement=true;
+    }
+    public void StartMovement(){
+        stopMovement=false;
     }
 }
